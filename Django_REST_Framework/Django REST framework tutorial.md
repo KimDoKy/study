@@ -1,6 +1,8 @@
 # Django REST framework tutorial
 
-## 시리얼라이저 사용하기
+## 1. serializer
+
+### 시리얼라이저 사용하기
 
 ```
 >>> from snippets.models import Snippet
@@ -50,7 +52,7 @@ OrderedDict([('title', ''), ('code', 'print "hello, world"'), ('linenos', False)
 
 ```
 
-## ModelSerializer 사용하기
+### ModelSerializer 사용하기
 
 ```
 >>> from snippets.serializers import SnippetSerializer
@@ -68,9 +70,9 @@ SnippetSerializer():
 > create() 메서드와 update() 메서드가 이미 구현되어 있다.
 
 
-## Serializer 사용하는 django view 만들기
+### Serializer 사용하는 django view 만들기
 
-views setting
+#### views setting
 
 ```
 from django.http import HttpResponse  
@@ -135,7 +137,7 @@ def snippet_detail(request, pk):
         return HttpResponse(status=204)
 ```
 
-url settings
+#### url settings
 
 ```
 from django.conf.urls import url  
@@ -146,4 +148,65 @@ urlpatterns = [
     url(r'^snippets/(?P<pk>[0-9]+)/$', views.snippet_detail),
 ]
 ```
+
+### 첫 웹 API 테스트 하기
+
+```
+ http http://127.0.0.1:8000/snippets/
+
+HTTP/1.0 200 OK
+Content-Length: 317
+Content-Type: application/json
+Date: Thu, 13 Apr 2017 16:42:11 GMT
+Server: WSGIServer/0.2 CPython/3.5.2
+X-Frame-Options: SAMEORIGIN
+
+[
+    {
+        "code": "foo = \"bar\"\n",
+        "id": 1,
+        "language": "python",
+        "linenos": false,
+        "style": "friendly",
+        "title": ""
+    },
+    {
+        "code": "print \"hello, world\"\n",
+        "id": 2,
+        "language": "python",
+        "linenos": false,
+        "style": "friendly",
+        "title": ""
+    },
+    {
+        "code": "print \"hello, world\"",
+        "id": 3,
+        "language": "python",
+        "linenos": false,
+        "style": "friendly",
+        "title": ""
+    }
+]
+
+
+http http://127.0.0.1:8000/snippets/2/
+HTTP/1.0 200 OK
+Content-Length: 108
+Content-Type: application/json
+Date: Thu, 13 Apr 2017 16:43:05 GMT
+Server: WSGIServer/0.2 CPython/3.5.2
+X-Frame-Options: SAMEORIGIN
+
+{
+    "code": "print \"hello, world\"\n",
+    "id": 2,
+    "language": "python",
+    "linenos": false,
+    "style": "friendly",
+    "title": ""
+}
+```
+
+## 2. 요청과 응답
+
 
