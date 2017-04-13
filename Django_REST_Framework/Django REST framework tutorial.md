@@ -1,8 +1,12 @@
 # Django REST framework tutorial
 
+<<<<<<< HEAD
 ## 1. serializer
 
 ### 시리얼라이저 사용하기
+=======
+## 시리얼라이저 사용하기
+>>>>>>> d65a888f9bbf08f5b47b9b5348a2067d29afcca1
 
 ```
 >>> from snippets.models import Snippet
@@ -52,7 +56,11 @@ OrderedDict([('title', ''), ('code', 'print "hello, world"'), ('linenos', False)
 
 ```
 
+<<<<<<< HEAD
 ### ModelSerializer 사용하기
+=======
+## ModelSerializer 사용하기
+>>>>>>> d65a888f9bbf08f5b47b9b5348a2067d29afcca1
 
 ```
 >>> from snippets.serializers import SnippetSerializer
@@ -70,9 +78,15 @@ SnippetSerializer():
 > create() 메서드와 update() 메서드가 이미 구현되어 있다.
 
 
+<<<<<<< HEAD
 ### Serializer 사용하는 django view 만들기
 
 #### views setting
+=======
+## Serializer 사용하는 django view 만들기
+
+views setting
+>>>>>>> d65a888f9bbf08f5b47b9b5348a2067d29afcca1
 
 ```
 from django.http import HttpResponse  
@@ -137,7 +151,11 @@ def snippet_detail(request, pk):
         return HttpResponse(status=204)
 ```
 
+<<<<<<< HEAD
 #### url settings
+=======
+url settings
+>>>>>>> d65a888f9bbf08f5b47b9b5348a2067d29afcca1
 
 ```
 from django.conf.urls import url  
@@ -145,6 +163,7 @@ from snippets import views
 
 urlpatterns = [  
     url(r'^snippets/$', views.snippet_list),
+<<<<<<< HEAD
     # ex) http://127.0.0.1:8000/snippets/
     url(r'^snippets/(?P<pk>[0-9]+)/$', 
     # ex) http://127.0.0.1:8000/snippets/2/views.snippet_detail),
@@ -468,3 +487,9 @@ API는 클라이언트의 요청에 따라 데이터의 포맷을 결정하여 �
 
 
 
+=======
+    url(r'^snippets/(?P<pk>[0-9]+)/$', views.snippet_detail),
+]
+```
+
+>>>>>>> d65a888f9bbf08f5b47b9b5348a2067d29afcca1
