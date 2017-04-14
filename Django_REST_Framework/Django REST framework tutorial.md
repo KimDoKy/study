@@ -670,6 +670,18 @@ source 인자로는 특정 필드를 지정할 수 있습니다. 여기에는 �
 
 이 필드는 CharField나 BooleanField와는 달리 타입이 없는 ReadOnlyField 클래스로 지정했습니다. 타입이 없는 ReadOnlyField는 직렬화에 사용되었을땐 언제나 읽기전용이므로, 모델의 인스턴스를 업데이트할 때는 사용할 수 없습니다. CharField(read_only=True)도 이와 같은 기능을 수행합니다.
 
+### 뷰에 요청 권한 추가
+이렇게 해서 코드 조각이 사용자와 연결되었습니다. 이제 인증 받은 사용자만 코드 조각을 생성/업데이트/삭제를 할 수 있습니다.
+
+REST 프레임워크는 특정 뷰에 제한을 걸 수 있는 권한 클래스를 제공하고 있습니다. 그중 한가지인 IsAuthenticatedOrReadOnly는 인증 받은 요청에 읽기와 쓰기 권한을 부여하고, 인증 받지 않은 요청에 대해서는 읽기 권한만 부여합니다.
+
+뷰 파일에 내용을 추가합니다.
+
+```
+# SnippetList, SnippetDetail에 필드 추가
+permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+```
+
 
 
 
