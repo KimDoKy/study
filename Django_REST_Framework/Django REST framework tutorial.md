@@ -637,6 +637,40 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
 ```
+snippets는 사용자 모델과 반대방향으로 이어져 있기 때문에 ModelSerializer에 기본적으로 추가되지 않습니다. 따라서 명시적으로 필드를 지정해주어야합니다.
+
+사용자와 관련된 뷰도 추가해야합니다. 읽기 전용 뷰만 있으면 되기 떄문에 제네릭 클래스 기분 뷰중에 ListAPIView와 RetriveAPIView를 사용합니다.
+
+### 사용자가 만든 코드 조각 연결하기
+지금까지 만든 코드조각은 사용자와 아무 관계도 맺지 않았습니다. 사용자는 직렬화된 표현에 나타나지 않았고ㅡ 요청하는 측에서 지정하는 속성이었을 뿐입니다.
+
+이를 해결하기 위해 코드 조각 뷰에서 .perform_create() 메서드를 오버라이딩해야합니다.
+이 메서드는 인스턴스를 저장하는 과정을 조정하며, 따라서 요청이나 요청 URL에서 정보를 원하는대로 다룰 수 있습니다.
+
+SnippetList 뷰 클래스에 내용 추가합니다.
+
+```
+def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+```
+우리가 만든 시리얼라이저의 create()메서드는 검증한 요청 데이터에 더하여 'owner' 필드도 전달합니다.
+
+### 시리얼라이저 업데이트하기
+이제 코드 조각이, 해당 코드 조각을 작성한 사용자와 연결되었습니다.
+SnippetSerailizer에도 이를 반영합니다. serailizers.py의 SnippetSerailizer에 추가합니다.
+
+```
+class SnippetSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    class Meta:
+        model = Snippet
+        fields = ('id', 'title', 'code', 'linenos', 'language', 'style', 'owner')
+```
+source 인자로는 특정 필드를 지정할 수 있습니다. 여기에는 직렬화된 인스턴스의 속성뿐만 아니라 위의 코드에서처럼 마침표 표기 방식을 통해 특정 속성을 탐색할 수도 있습니다.
+
+이 필드는 CharField나 BooleanField와는 달리 타입이 없는 ReadOnlyField 클래스로 지정했습니다. 타입이 없는 ReadOnlyField는 직렬화에 사용되었을땐 언제나 읽기전용이므로, 모델의 인스턴스를 업데이트할 때는 사용할 수 없습니다. CharField(read_only=True)도 이와 같은 기능을 수행합니다.
+
+
 
 
 
