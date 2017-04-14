@@ -814,5 +814,48 @@ url(r'^$', views.api_root),
 url(r'^snippets/(?P<pk>[0-9]+)/highlight/$', views.SnippetHighlight.as_view()),  
 ```
 
+#### 하이퍼링크로 API 연결하기
+
+관계를 표현하는 방법은 다양합니다.
+
+- 주 키(primary key)
+- 하이퍼링크
+- 관계 요소의 식별 가능한 슬러그(slug)필드
+- 관계 요소의 기본 문자열 표현
+- 포함된 관계 요소에 대한 표현
+- 이 외에도 사용자화된 표현
+
+REST 프레임워크는 모든 방법을 지원합니다.
+
+
+하이퍼링크 방식을 사용하려면 기존에 사용했던 ModelSerializer를 HyperlinkedModelSerialzer로 변경해야합니다.
+
+HyperlinkedModelSerializer는 다음과 같은 점들이 다릅니다.
+
+- pk 필드는 기본 요소가 아닙니다.
+- HyperlinkedIndentityField 대신 HyperlinkedRelatedField를 사용하여 나타냅니다.
+
+```
+class SnippetSerializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    highlight = serializers.HyperlinkedIdentityField(view_name='snippet-highllight', format='html')
+    
+    class Meta:
+        model = Snippet
+        fields = ('url', 'highlight', 'title', 'code', 'linenos', 'language', 'style', 'owner')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    snippets = serializers.HyperlinkedRelatedField(many=True, view_name='snippet-detail', read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('user', 'usernama', 'snippets')
+```
+
+'highlight' 필드가 추가되었습니다. 이 필드는 url 필드와 같은 타입이며, 'snippet-detail' url 패턴 대신 'snippet-highlight' url패턴을 가리킵니다.
+
+앞에서 URL의  format 접미어로 '.json'을 붙엿듯이, highlight 필드에는 format 접미어로 '.html'을 붙였습니다.
+
 
 
