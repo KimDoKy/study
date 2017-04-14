@@ -946,7 +946,34 @@ class SnippetViewSet(viewsets.ModelViewSet):
 
 추가 기능의 URL은 기본적으로 메서드 이름과 같습니다. 이를 변경하고 싶다면 데코레이터에 url_path 인자를 설정하면 됩니다.
 
+### 뷰셋과 주소를 명시적으로 연결하기
+핸들러 메서드는 단지 URL 설정과 연결하는 기능만 담당합니다.
+물 밑에서 어떤 일들이 벌어지는지 알아보고자, 먼저 뷰셋의 뷰들을 명시적으로 작성합니다.
 
+```
+from snippets.views import SnippetViewSet, UserViewSet, api_root  
+from rest_framework import renderers
+
+snippet_list = SnippetViewSet.as_view({  
+    'get': 'list',
+    'post': 'create'
+})
+snippet_detail = SnippetViewSet.as_view({  
+    'get': 'retrieve',
+    'put': 'update',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
+snippet_highlight = SnippetViewSet.as_view({  
+    'get': 'highlight'
+}, renderer_classes=[renderers.StaticHTMLRenderer])
+user_list = UserViewSet.as_view({  
+    'get': 'list'
+})
+user_detail = UserViewSet.as_view({  
+    'get': 'retrieve'
+})
+```
 
 
 
