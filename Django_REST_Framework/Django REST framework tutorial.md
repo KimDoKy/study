@@ -1,12 +1,8 @@
 # Django REST framework tutorial
 
-<<<<<<< HEAD
 ## 1. serializer
 
 ### 시리얼라이저 사용하기
-=======
-## 시리얼라이저 사용하기
->>>>>>> d65a888f9bbf08f5b47b9b5348a2067d29afcca1
 
 ```
 >>> from snippets.models import Snippet
@@ -56,11 +52,7 @@ OrderedDict([('title', ''), ('code', 'print "hello, world"'), ('linenos', False)
 
 ```
 
-<<<<<<< HEAD
 ### ModelSerializer 사용하기
-=======
-## ModelSerializer 사용하기
->>>>>>> d65a888f9bbf08f5b47b9b5348a2067d29afcca1
 
 ```
 >>> from snippets.serializers import SnippetSerializer
@@ -78,15 +70,9 @@ SnippetSerializer():
 > create() 메서드와 update() 메서드가 이미 구현되어 있다.
 
 
-<<<<<<< HEAD
 ### Serializer 사용하는 django view 만들기
 
 #### views setting
-=======
-## Serializer 사용하는 django view 만들기
-
-views setting
->>>>>>> d65a888f9bbf08f5b47b9b5348a2067d29afcca1
 
 ```
 from django.http import HttpResponse  
@@ -151,11 +137,7 @@ def snippet_detail(request, pk):
         return HttpResponse(status=204)
 ```
 
-<<<<<<< HEAD
 #### url settings
-=======
-url settings
->>>>>>> d65a888f9bbf08f5b47b9b5348a2067d29afcca1
 
 ```
 from django.conf.urls import url  
@@ -163,7 +145,6 @@ from snippets import views
 
 urlpatterns = [  
     url(r'^snippets/$', views.snippet_list),
-<<<<<<< HEAD
     # ex) http://127.0.0.1:8000/snippets/
     url(r'^snippets/(?P<pk>[0-9]+)/$', 
     # ex) http://127.0.0.1:8000/snippets/2/views.snippet_detail),
@@ -485,11 +466,147 @@ X-Frame-Options: SAMEORIGIN
 ### 탐색 가능한 API
 API는 클라이언트의 요청에 따라 데이터의 포맷을 결정하여 응답합니다. 따라서 웹브라우저의 요청에는 기본적으로 HTMl 형태로 응답합니다. 이 덕분에 API를 웹브라우저에서 탐색할 수 있습니다.
 
+## 3. 클래스 기반 뷰
+클래스 기반 뷰는 일반적인 기능을 재사용하게 해주며 코드 중복(DRY)를 막아줍니다.
+
+### 클래스 기반 뷰로 API 재작성하기
+
+```python
+from django.http import Http404
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from snippets.models import Snippet
+from snippets.serializers import SnippetSerializer
+
+# CBV(APIView)으로 리팩토링
+class SnippetList(APIView):
+    def get(self, request, format=None):
+        snippets = Snippet.objects.all()
+        serializer = SnippetSerializer(snippets, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = SnippetSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-=======
-    url(r'^snippets/(?P<pk>[0-9]+)/$', views.snippet_detail),
-]
+class SnippetDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return Snippet.objects.get(pk=pk)
+        except Snippet.DoesNotExist:
+            raise Http404
+
+    def put(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        serializer = SnippetSerializer(snippet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 ```
 
->>>>>>> d65a888f9bbf08f5b47b9b5348a2067d29afcca1
+```
+from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
+
+from snippets import views
+
+# CBV사용으로 .as_view() 사용
+urlpatterns = [
+    url(r'^snippets/$', views.SnippetList.as_view()),
+
+    url(r'^snippets/(?P<pk>[0-9]+)/$', views.SnippetDetail.as_view()),
+]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
+```
+
+### 믹스인 사용하기
+클래스 기반 뷰를 사용하여 얻는 가장 큰 이점은 기능들을 손쉽게 조합할 수 있다는 점입니다.  
+
+```
+from snippets.models import Snippet
+from snippets.serializers import SnippetSerializer
+from rest_framework import mixins
+from rest_framework import generics
+
+class SnippetList(mixins.ListModelMixin,
+                  mixins.CreateModelMixin,
+                  generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+
+    def get(self, request, *arg, **kwargs):
+        return self.list(request, *arg, **kwargs)
+    
+    def post(self, request,*args, **kwargs):
+        return self.create(request, *args, **kwargs)
+    
+class SnippetDetail(mixins.RetrieveModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+    
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+    
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+```
+
+기본 뷰(GenericAPIView)는 핵심 기능을 제공하며, 믹스인 클래스들은 .list(), .create() 기능 등을 제공합니다. 위 코드에서는 get, post 메서드에 적절히 연결하였습니다.
+
+### 제네릭 클래스 기반 뷰 사용하기
+믹스인 클래스를 사용하여 뷰의 코드를 꽤 많이 줄였지만 더 줄일 수 있습니다.
+REST 프레임워크에서는 믹스인과 연결된 **제네릭 뷰**를 제공합니다.
+
+```python
+from snippets.models import Snippet
+from snippets.serializers import SnippetSerializer
+from rest_framework import generics
+
+class SnippetList(generics.ListCreateAPIView):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+    
+class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+```
+ 큰 노력 없이 아주 많은 기능을 구현했는데도 코드는 더 깔끔하고 더 Django다워졌습니다.
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
