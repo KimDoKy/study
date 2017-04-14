@@ -591,10 +591,24 @@ class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
 ```
  큰 노력 없이 아주 많은 기능을 구현했는데도 코드는 더 깔끔하고 더 Django다워졌습니다.
  
+## 4. 인증과 권한
+앞에서 만든 API에서는 누구나 편집, 삭제 할수 있습니다.
 
+#### 지금 필요한 기능들
 
+- 코드 조각은 만든 사람과 연관이 있다.
+- 인증받은 사용자만 코드 조각을 만들 수 있다.
+- 해당 코드 조각을 만든 사람만, 이를 편집, 삭제할 수 있다.
+- 인증받지 않은 사용자는 '읽기 전용'으로만 사용 가능하다.
 
+### 모델에 속성 추가하기
 
+```python
+# models.py Snippet 모델에 추가
+
+owner = models.ForeignKey('auth.User', related_name='snippets')  
+highlighted = models.TextField()  
+```
 
 
 
