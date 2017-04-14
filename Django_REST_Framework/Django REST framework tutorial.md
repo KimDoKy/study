@@ -682,9 +682,50 @@ REST 프레임워크는 특정 뷰에 제한을 걸 수 있는 권한 클래스�
 permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 ```
 
+### 탐색 가능한 API에 로그인 추가하기
+지금 시점에 브라우저에 API에 접속하면 더이상 새 코드 조각을 만들수 없음을 알 수 있습니다. 이를 해결하려면 사용자 로그인 기능이 필요합니다.
+
+urls.py를 수정하면 탐색 가능한 API 에 사용한 로그인 뷰를 추가할 수 있습니다.
+
+```
+urlpatterns += [
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+]
+```
+여기에는 한가지 제약이 따르는데, namespace에 'rest_framework'를 지정해야합니다.
+다시 브라우저로 돌아가 API에 접근해보면 오른쪽 상단에 'Login' 링크를 확인할 수 있습니다.
+
+### 객체 수준에서 권한 설정하기
+코드 조각은 아무나 볼 수 있어야 하지만, 업데이트와 삭제는 해당 코드를 만든 사용자만 할 수 있어야합니다.
+
+이를 위한 커스텀 권한을 만들어봅니다.
+
+snippet앱 안에 permissions.py을 만들고 내용을 입력합니다.
+
+```python
+from rest_framework import permissions
 
 
+class IsOwnerOrReadOnly(permissions.BasePermission):  
+    """
+    객체의 소유자에게만 쓰기를 허용하는 커스텀 권한
+    """
 
+    def has_object_permission(self, request, view, obj):
+        # 읽기 권한은 모두에게 허용하므로,
+        # GET, HEAD, OPTIONS 요청은 항상 허용함
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        # 쓰기 권한은 코드 조각의 소유자에게만 부여함
+        return obj.owner == request.user
+```
+SnippetDetail 클래스에 permission_classes 속성을 추가합니다.
+
+```
+permission_classes = (permissions.IsAuthenticatedOrReadOnly,  
+                      IsOwnerOrReadOnly,)
+```
 
 
 
