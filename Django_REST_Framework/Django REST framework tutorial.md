@@ -726,9 +726,60 @@ SnippetDetail 클래스에 permission_classes 속성을 추가합니다.
 permission_classes = (permissions.IsAuthenticatedOrReadOnly,  
                       IsOwnerOrReadOnly,)
 ```
+ 
+### API에 인증 붙이기
+API에 권한을 설정했으므로, 이지는 코드 조각을 수정할 수 있는 인증 절차가 필요합니다. 니금까지는 인증 클래스를 만들지 않고 기본으로 제공되는 SessionAuthentication과 BasicAuthentication을 사용했습니다.  
 
+웹 브라우저 API를 사용하는 경우, 로그인을 하면 브라우저의 세션에 인증 정보가 저장됩니다.
 
+프로그램 상에서 API를 사용하는 경우, 인증에 필요한 내용을 명시적으로 전달해야만 합니다.
 
+인증 없이 코드 조각을 생성하려는 경우, 다음과 같이 에러를 보여줍니다.
+
+```
+http POST http://127.0.0.1:8000/snippets/ code="print 123"
+
+{
+    "detail": "Authentication credentials were not provided."
+}
+```
+
+사용자의 계정과 비밀번호를 포함하여 요청한다면, 이 요청은 성공합니다.
+
+```
+http -a tom:password POST http://127.0.0.1:8000/snippets/ code="print 789"
+
+{
+    "id": 5,
+    "owner": "tom",
+    "title": "foo",
+    "code": "print 789",
+    "linenos": false,
+    "language": "python",
+    "style": "friendly"
+}
+```
+
+## 5. 관계 & 하이퍼링크
+
+지금까지 우리가 만든 API에서 '관계'는 primary Key로 나타내고 있었습니다.
+이번 튜토리얼에서는 API의 발견성과 응집력을 향상시키고자 관계를 하이퍼링크로 나타내보겠습니다.
+
+#### API의 최상단에 대한 엔드 포인트 만들기
+'코드조각'과 '사용자'에 대한 엔드 포인트를 만들었지만, 아직까지 이렇다할 API의 시작점은 없었습니다.
+이를 만들기 위해 평범한 함수 기반 뷰와  @api_view 데코레이터를 사용하겠습니다.
+
+```
+# views.py
+
+@api_view(('GET,'))
+def api_root(request, format=None):
+    return Response({
+        'user': reverse('user-list', request=request, format=format),
+        'snippets': reverse('snippet-list', request=request, format=format)
+    })
+```
+URL을 만드는데 reverse함수를 사용한 점을 주목하세요.
 
 
 
