@@ -609,13 +609,34 @@ class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
 owner = models.ForeignKey('auth.User', related_name='snippets')  
 highlighted = models.TextField()  
 ```
+모델이 저장될 때 하이라이트 된 코드를 highlighed 핖ㄹ드에 저쟝하야 합니다. 코드 하이라이팅에는 pygments 라이브러리를 사용합니다.
 
+.save() 메소드를 작성합니다.
 
+```python
+    def save(self, *args, **kwargs):
+        lexer = get_lexer_by_name(self.language)
+        linenos = self.linenos and 'table' or False
+        options = self.title and {'title': self.title} or {}
+        formatter = HtmlFormatter(style=self.style, linenos=linenos,
+                                  full=True, **options)
+        self.highlighted = highlight(self.code, lexer, formatter)
+        super(Snippet, self).save(*args, **kwargs)
+```
 
+### 사용자 모델에 엔드포인트 추가하기
 
+사용자를 추가했으니 사용자를 보여주는 API도 추가합니다.
 
+```python
+rom django.contrib.auth.models import User
 
+class UserSerializer(serializers.ModelSerializer):  
+    snippets = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippet.objects.all())
 
+    class Meta:
+        model = User
+```
 
 
 
