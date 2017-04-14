@@ -781,5 +781,38 @@ def api_root(request, format=None):
 ```
 URL을 만드는데 reverse함수를 사용한 점을 주목하세요.
 
+#### 코드 조각의 하이라이트 버전에 대란 엔드 포인트 만들기
+API에서 아직까지 만들지 않은 부분은 코드 조각의 하이라이트 버전을 볼 수 있는 방법입니다.
+
+API의 다른 부분과는 달리 이번에는 JSON 대신 HTML 형태로 나타내겠습니다 REST 프레임워크에서 HTML로 렌더링하는 방식은 두 가지 정도가 있는데, 하나는 템플릿을 사용하는 것이고, 다른 하나는 미리 렌더링 된 HTML 을 사용하는 것입니다. 후자를 사용하겠습니다.
+
+하이라이트 된 코드 조각을 보여주려고 할 때 주의해야할 점은, 우리가 사용할 만한 제네릭 뷰가 없다는 것입니다. 오브젝트 자체가 아니라, 오브젝트의 속성 하나를 반호나할 것이기 때문입니다.
+
+제네릭 뷰 대신 평범한 클래스를 사용하고, .get() 메서드를 구현합니다.
+
+```
+# views.py
+
+from rest_framework import renderers  
+from rest_framework.response import Response
+
+class SnippetHighlight(generics.GenericAPIView):  
+    queryset = Snippet.objects.all()
+    renderer_classes = (renderers.StaticHTMLRenderer,)
+
+    def get(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
+```
+
+url도 연결
+
+```
+# 최상단 url
+url(r'^$', views.api_root), 
+# 하이라이트 조각 url
+url(r'^snippets/(?P<pk>[0-9]+)/highlight/$', views.SnippetHighlight.as_view()),  
+```
+
 
 
