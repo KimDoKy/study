@@ -857,5 +857,30 @@ class UserSerializer(serializers.ModelSerializer):
 
 앞에서 URL의  format 접미어로 '.json'을 붙엿듯이, highlight 필드에는 format 접미어로 '.html'을 붙였습니다.
 
+### URL 패턴에 이름 붙이기
+하이퍼링크 API를 만들려면 URL 패턴에 이름을 붙여야 합니다.
+
+- API의 최상단은 'user-list'와 'snippet-list'를 가리킵니다.
+- 코드 조각 시리얼라이저에는 'snippet-highlight'를 가리키는 필드가 존재합니다.
+- 사용자 시리얼라이저에는 'snippet-detail'을 가리키는 필드가 존재합니다.
+- 코드 조각 시리얼라이저와 사용자 시리얼라이저에는 'url' 필드가 존재합니다. 이 필드는 기본적으로 '{모델_이름}-detail'을 가리키며 따라서 'snippet-detail'과 'user-detail'을 가리킵니다.
+
+```
+urlpatterns = [
+    url(r'^$', views.api_root),
+    url(r'^snippets/$', views.SnippetList.as_view(), name='snippet-list'),
+    url(r'^snippets/(?P<pk>[0-9]+)/$', views.SnippetDetail.as_view(), name='snippet-detail'),
+    url(r'^snippets/(?P<pk>[0-9]+)/highlight/$', views.SnippetHighlight.as_view(), name='snippet-highlight'),
+    url(r'users/$', views.UserList.as_view(), name='user-list'),
+    url(r'users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view(), name='user-detail'),
 
 
+
+]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
+
+urlpatterns += [
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+]
+```
