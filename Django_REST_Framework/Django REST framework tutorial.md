@@ -657,7 +657,7 @@ def perform_create(self, serializer):
 
 ### 시리얼라이저 업데이트하기
 이제 코드 조각이, 해당 코드 조각을 작성한 사용자와 연결되었습니다.
-SnippetSerailizer에도 이를 반영합니다. serailizers.py의 SnippetSerailizer에 추가합니다.
+SnippetSerializer에도 이를 반영합니다. serializers.py의 SnippetSerializer에 추가합니다.
 
 ```
 class SnippetSerializer(serializers.ModelSerializer):
@@ -896,4 +896,75 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 ```
+
+### 탐색 가능한 API
+탐색 가능한  API를 브라우저에서 열어서 링크들을 이리저리 눌러보면, API의 구석구석을 둘러볼 수 있습니다.
+
+## 6. 뷰셋과 라우터
+
+REST 프레임워크는 ViewSets이라는 추상클래스를 제공ㄹ합니다, 이를 통해 개발자는 API의 상호작용이나 상태별 모델링에 집중할 수 있고, URL 구조는 기본 관럐에 따라 자동을 성정됩니다.
+
+ViewSet 클래스는 Views 클래스와 거의 비슷하지만, get, put 메서드는 지원하지 않고 read, update 메서드를 지원합니다.
+
+ViewSet 클래스는 앞서 만든 핸들러 메서드가 실제 뷰로 구체화 될때 이를 연결해주기만 합니다, 이 떄 보통은 Router 클래스를 사용하여 복잡한 URL 설정을 처리합니다.
+
+### 뷰셋을 사용하여 리팩터링하기
+
+UserList와 UserDetail 뷰를 UserViewSet 하나로 모읍니다.
+
+```
+from rest_framework import viewsets
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+```
+ReadOnlyModelViewSet 클래스는 '읽기 전용' 기능을 자동으로 지원합니다. queryset과 serializer_class 속성은 여전히 설정해야하지만 두개의 클래스에 중복으로 설정할 필요는 없어졌습니다.
+
+SnippetList와 SnippetDetail, SnippetHighlight 뷰를 리팩터링합니다.
+
+```
+class SnippetViewSet(viewsets.ModelViewSet):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
+
+    @detail_route(renderer_classes=[renderers.StaticHTMLRenderer])
+    def highlight(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+```
+
+읽기 기능과 쓰기 기능을 모두 지원하기 위해 ModelViewSet 클래스를 사용했습니다.
+
+추가한 highlight 기능에는 여전히 @detail_router 데코레이터를 사용했습니다. 이 데코레이터는 create나 update에 해당하지 않는 기능에 대해 사용하면 됩니다.
+
+@detail_router 데코레이터를 사용한 기능은 기본적으로 GET 요청에 응답합니다. method 인자를 설정하면 POST 요청에도 응답할 수 있습니다.
+
+추가 기능의 URL은 기본적으로 메서드 이름과 같습니다. 이를 변경하고 싶다면 데코레이터에 url_path 인자를 설정하면 됩니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
