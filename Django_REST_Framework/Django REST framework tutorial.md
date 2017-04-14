@@ -884,3 +884,16 @@ urlpatterns += [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 ```
+
+### 페이징 기능 추가하기
+
+REST 프레임워크의 모든 설정은 'REST_FRAMEWORK'라는 딕셔너리에 넣어야합니다.
+이렇게 해야 프로젝트의 다른 설정들과 분리 할 수 있습니다.
+필요에 따라 페이징 스타일을 바꿀수도 있습니다.
+
+```
+REST_FRAMEWORK = {  
+    'PAGE_SIZE': 10
+}
+```
+
