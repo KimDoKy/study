@@ -128,3 +128,23 @@ django.core.urlresolvers.Resolver404: {'tried': [[<RegexURLResolver3
 문제 있는 코드를 확인할때 일반적으로 사용하는 4단계 과정이다.
 이렇게 모든 정보를 취합해 트레이스백을 해석한 결과, "/"를 확인하려고 할 때 Django가 404 에러를 발생시키고 있다는 것을 알 수 있다.
 
+#### 부분적인 설명
+```python
+ def test_home_page_returns_correct_html(self):
+        request = HttpRequest()  #1
+        response = home_page(request)  #2
+        self.assertTrue(response.content.startswith(b'<html>'))  #3
+        self.assertIn(b'<title>To-Do lists</title>', response.content)  #4
+        self.assertTrue(response.content.endswith(b'</html>'))  #5
+```
+1. HttpRequest 객체를 생성해서 사용자가 어떤 요청을 브라우저에 보내는지 확인한다.
+2. 이것을 home_page 뷰에 전달해서 응답을 취득한다. 이 객체는 HttpResponse라는 클래스의 인스턴스이다. 응답내용(HTML 형태로 사용자에세 보내는것)이 특정 속성을 가지고 있는지 확인한다.
+3.5. 그 다음은 응답 내용이 <html>으로 시작하고  </html>으로 끝나는지 확인한다. response.content는 byte형 데이터로, 파이썬 문자열이 아니다. 따라서 b''구문을 사용해서 비교한다.
+4. 반환 내용의 <title> 태그에 "To-Do lists"라는 단어가 있는지 확인한다. 앞선 기능 테스트에서 확인한 것이기 때문에 단위 테스트로 확인해주어야 한다. 
+
+여기서부터 **TDD 단위 테스트 - 코드 주기** 에 대해 생각해야 한다.
+
+1. 터미널에서 단위 테스트를 실행해서 어떻게 실패하는지 확인한다.
+2. 편집기상에서 현재 실패 테스트를 수정하기 위한 최소한의 코드를 변경한다.
+
+코드 품질을 높이고 싶다면 코드 변경을 최고화해야한다. 또한 이렇게 최소화한 코드는 하나하나 테스트에 의해 검증돼야 한다. 매우 고된 작업이라고 생각될 수 있지만, 한번 익숙해지기 시작하면 속도는 빨라진다. 따라서 아무리 자신 있는 부분이라도 작은 단위로 나누어 코드를 변경하도록 한다.
