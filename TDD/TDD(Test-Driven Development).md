@@ -199,3 +199,58 @@ TDD가 훌륭한 이유 중 하나가 다음에 무엇을 해야 할지 잊어�
 ```
 
 셀레늄이 제공하는 다양한 메소드를 사용하고 있다. `find_element_by_tag_name`, `find_element_by_id`, `find_elements_by_tag)bane`등이다. 셀레늄의 입력 요소를 타이핑하는 방법인 `send_keys`라는 것도 사용한다.
+> element와 elements의 차이점에 유의해야한다. 전자는 하나의 요소만 반환하며 요소가 없으면 예외를 발생시킨디. 반면 후자는 리스트를 반환하며 이 리스트가 비어 있어도 괜찮다.
+
+### "상수는 테스트하지 마라"는 규칙과 탈출구로 사용할 템플릿
+단위 테스트는 로직이나 흐름 제어, 설정 등을 테스트하기 위한 것이다. 정확히 어떤 글자들이 HTML 문자열이 배열되어 있는지 체크하는 어썰션은 아무 의미가 없다.
+
+#### 템플릿을 사용하기 위한 리팩터링
+리팩터링(Refactoring)이란 **"기능(결과물)은 바꾸지 않고"** 코드 자체를 개선하는 작업을 일컫는다.
+
+
+#### 트래이스백 분석
+
+```
+$ python3 manage.py test
+[...]
+======================================================================
+ERROR: test_home_page_returns_correct_html (lists.tests.HomePageTest) #1
+ ---------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/superlists/lists/tests.py", line 17, in
+test_home_page_returns_correct_html
+    response = home_page(request) #2
+  File "/workspace/superlists/lists/views.py", line 5, in home_page
+    return render(request, 'home.html') #3
+  File "/usr/local/lib/python3.3/dist-packages/django/shortcuts.py", line 48,
+in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/usr/local/lib/python3.3/dist-packages/django/template/loader.py", line
+170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "/usr/local/lib/python3.3/dist-packages/django/template/loader.py", line
+144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "/usr/local/lib/python3.3/dist-packages/django/template/loader.py", line
+136, in find_template
+    raise TemplateDoesNotExist(name)
+django.template.base.TemplateDoesNotExist: home.html #4 
+
+ ---------------------------------------------------------------------
+Ran 2 tests in 0.004s
+```
+4. 먼저 에러를 확인하자: 템플릿을 발견할 수 없어서 에러가 발생하고 있다.
+1. 어떤 테스트가 실패하는지 다시 확인한다: HTML 뷰 테스트 부분이다.
+2. 테스트의 어느 코드에 문제가 있는지 확인한다: home_page 함수 호출에 문제가 있다.
+3. 마지막으로 애플리케이션의 어느 부분에서 에러가 발생하는지 확인한다: render 호출 부분에서 에러가 발생한다.
+
+```python
+    def test_home_page_returns_correct_html(self):
+        request = HttpRequest()
+        response = home_page(request)
+        expexted_html = render_to_string('home.html')
+        self.assertEqual(response.content.decode(), expexted_html)
+```
+`.decode()`를 이용해서 `response.content` 바이트 데이터를 파이썬 유니코드 문자열로 반환한다. 이를 통해 바이트와 바이트를 비교하는것이 아니라 문자열과 문자열을 서로 비교할 수 있다.
+여기서 중요한것은 상수를 태스트하는 것이 아니라 구현 결과물을 비교하는 것이다.
+
