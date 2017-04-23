@@ -1,5 +1,7 @@
 # TDD (Test-Driven Development, 테스트 주도 개발)
 
+## 1부
+
 ## 2장 unittest 모듈을 이용한 기능 테스트 확장
 ### Functional test(FT) : 기능 테스트
 셀레늄을 이용하 테스트에서는 실제 웹 브라우저를 실행해서 애플리케이션이 어떻게 "동작(functiona)"하는지 사용자 관점에서 확인 할 수 있다.
@@ -155,3 +157,45 @@ python3 functional_test.py
 ##### 단위 테스트
 python3 manage.py test
 
+## 3장 왜 테스트를 하는 것인가?
+TDD가 훌륭한 이유 중 하나가 다음에 무엇을 해야 할지 잊어버릴 걱정이 없다는 것이다. 테스트를 다시 실행하기만 하면 다음 작업이 무엇이닞 가르쳐준다.
+
+```python
+
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        # 에디스(Edith)는 멋진 작업 목록 온라인 앱이 나왔다는 소식을 듣고
+        # 해당 앱 사이트를 확인하러 간다
+        self.browser.get('http://localhost:8000')
+
+        # 웹 페이지 타이틀과 헤더가 'To-Do'를 표시하고 있다
+        self.assertIn('To-Do', self.browser.title)
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('To-Do', header_text)
+
+        # 그녀는 바로 추가하기로 한다
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertEqual(
+            inputbox.get_attribute('placeholder'),
+            'Enter a to-do item'
+        )
+
+        # "공작깃털 사기"라고 텍스트 상자에 입력한다
+        # (에디스의 취미는 날치 잡이용 그물을 만드는 것이다)
+        inputbox.send_keys('Buy peacock feathers')
+
+        # 엔터키를 치면 페이지가 갱신되고 작업 목록에
+        # "1: 공작깃털 사기" 아이템이 추가된다
+        inputbox.send_keys(Keys.ENTER)
+
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertTrue(
+            any(row.text == '1: Buy peacock feathers' for row in rows)
+        )
+
+        # 추가 아이템을 입력할 수 있는 여분의 텍스트 상자가 존재한다
+        # 대시 "공작깃털을 이용해서 그물 만들기"라고 입력한다(에디스는 매우 체계적인 사람이다)
+        self.fail('Finish the test!')
+```
+
+셀레늄이 제공하는 다양한 메소드를 사용하고 있다. `find_element_by_tag_name`, `find_element_by_id`, `find_elements_by_tag)bane`등이다. 셀레늄의 입력 요소를 타이핑하는 방법인 `send_keys`라는 것도 사용한다.
