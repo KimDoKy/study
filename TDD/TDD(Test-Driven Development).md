@@ -363,3 +363,35 @@ self.assertRegex(edith_list_url, '/lists/.+')
 assertRegex는 unittest에 부속된 헬퍼 함수로, 지정한 정규표현과 문자열이 일치하는지 확인한다. REST 설계가 제대로 구현됐는지 확인하기 위해 사용한다.
 
 `##` : 메타(meta) 주석임을 나타낸다. FT에서 일반 주석은 사용자 스토리를 설명하지만, 메타 주석은 테스트가 어떻게 동작하는지 설명하기 위해 사용한다. 
+
+#### 새로운 설계를 위한 반복
+
+```
+AssertionError: Regex didn't match: '/lists/.+' not found in 'http://localhost:8081/'
+```
+Regexp 불일치 문제를 가지고 있는 FT가, 두번째 아이템에 개별 URL과 식별자를 적용하는 것이 다음 작업이라고 말해주고 있다.
+
+URL은 POST 후의 리디렉션으로부터 온다.
+
+### Django 테스트 클라이언트를 이용한 뷰, 템플릿, URL 동시 테스트
+#### 새로운 테스트 클래스
+
+```python
+		response = self.client.get('/list/the-only-list-in-the-world/')
+
+        self.assertContains(response, 'itemey 1')
+        self.assertContains(response, 'itemey 2')
+```
+1. 뷰 함수를 바로 호출하지 않고 Django TestCase의 속성인 self.client(테스트 클라이언트)를 사용하고 있다. 여기에 테스트할 URL을 .get 한다. 이것은 셀레늄에서 사용하는 API와 비슷하다.
+2. 성가신 assertIn/response.content.decode()를 사용하지 않고, 대신에 Django가 제공하는 assertContains 메소드를 사용한다. 이 메소드는 응답(response) 내용을 어떻게 처리해야 하는지 않다.
+
+#### 신규 URL
+테스트나 urls.py에서 URL 표기 시 마지막에 붙이는 꼬리 슬래시에 주의하자. 버그의 원인이 될 수 있다.
+#### 신규 뷰 함수
+뷰를 구현해도 
+`AssertionError: 404 != 200 : Couldn't retrieve content: Response code was 404 (expected 200)` 에러가 난다면
+테스트에 입력한 url에 오타가 있는지 확인해 보자.
+#### 그린? 아니면 리팩터?
+`grep -E "class|def" lists/tests.py`
+grep은 사용자가 원하는 라인만 골라서 출력해주는 리눅스 명령어이다.
+시간 날때 한번 살펴봐야겠다[.](https://iamapark89.wordpress.com/2013/12/01/2-%EB%A6%AC%EB%88%85%EC%8A%A4-%EB%AA%85%EB%A0%B9%EC%96%B4-grep-%EC%9B%90%ED%95%98%EB%8A%94-%EB%9D%BC%EC%9D%B8%EB%A7%8C-%EC%B6%9C%EB%A0%A5%ED%95%98%EA%B8%B0-2/)
