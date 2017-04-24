@@ -1,12 +1,12 @@
 from django.core.urlresolvers import resolve
 from django.http import HttpRequest
-from django.template.loader import render_to_string
 from django.test import TestCase
-from lists.views import home_page
+
 from lists.models import Item
+from lists.views import home_page
+
 
 class HomePageTest(TestCase):
-
     def test_root_url_resolves_to_home_page_view(self):
         found = resolve('/')
         self.assertEqual(found.func, home_page)
@@ -41,11 +41,12 @@ class HomePageTest(TestCase):
         Item.objects.create(text='itemey 1')
         Item.objects.create(text='itemey 2')
 
-        request =  HttpRequest()
+        request = HttpRequest()
         response = home_page(request)
 
         self.assertIn('itemey 1', response.content.decode())
         self.assertIn('itemey 2', response.content.decode())
+
 
 class ItemModelTest(TestCase):
     def test_saving_and_retrieving_items(self):
