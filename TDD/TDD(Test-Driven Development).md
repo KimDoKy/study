@@ -545,3 +545,41 @@ AttributeError: 'module' object has no attribute 'add_item'
 ```
 
 ### 마지막 신규 뷰
+오타를...조심하자.....
+
+### 폼에서 URL을 사용하는 방법
+
+### URL includes 를 이용한 마지막 리팩터링
+url 설정은 사이트에 나온 그대로 하면된다.
+주의점은 import!!!!!!!!!
+
+```python
+# superlists/urls.py. 
+
+from django.conf.urls import url, include
+from django.contrib import admin
+from lists import views as list_views
+from lists import urls as list_urls
+
+urlpatterns = [
+    url(r'^$', list_views.home_page, name='home'),
+    url(r'^lists/', include(list_urls)),
+    # url(r'^admin/', admin.site.urls),
+]
+```
+
+```python
+# lists/urls.py
+
+from django.conf.urls import url
+from lists import views
+
+urlpatterns = [
+    url(r'^new$', views.new_list, name='new_list'),
+    url(r'^(\d+)/$', views.view_list, name='view_list'),
+    url(r'^(\d+)/add_item$', views.add_item, name='add_item'),
+]
+```
+
+
+
