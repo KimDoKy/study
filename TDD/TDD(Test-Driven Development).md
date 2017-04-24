@@ -419,3 +419,129 @@ AssertionError: 404 != 302
 **헬퍼 함수, 테스트 클라이언트**를 더 공부해야겠음.
 
 #### 필요없는 코드와 테스트 삭제
+#### 새로운 URL에 있는 폼 가리키기
+
+### 모델조정하기
+
+```python
++class ListAndItemModelsTest(TestCase):
+
+     def test_saving_and_retrieving_items(self):
++        list_ = List()
++        list_.save()
++
+         first_item = Item()
+         first_item.text = 'The first (ever) list item'
++        first_item.list = list_
+         first_item.save()
+
+         second_item = Item()
+         second_item.text = 'Item the second'
++        second_item.list = list_
+         second_item.save()
+
++        saved_list = List.objects.first()
++        self.assertEqual(saved_list, list_)
++
+         saved_items = Item.objects.all()
+         self.assertEqual(saved_items.count(), 2)
+
+         first_saved_item = saved_items[0]
+         second_saved_item = saved_items[1]
+         self.assertEqual(first_saved_item.text, 'The first (ever) list item')
++        self.assertEqual(first_saved_item.list, list_)
+         self.assertEqual(second_saved_item.text, 'Item the second')
++        self.assertEqual(second_saved_item.list, list_)
+```
+새로운 List(목록) 객체를 생성하고, 각 아이템에 .list 속성을 부여해서 List 객체에 할당하고 있다. 목록이 제대로 저장됐는지와 두 개 작업 아이템이 목로겡 제대로 할당됐는지 확인하도록 한다. 목록 개체를 서로 비교하는 것이 가능하다.(saved_list와 list) 이 비교 처리는, 주 키(.id 속성)가 같은지 확인하고 있다.
+>파이썬 기본 list 함수와 충돌하는 것을 막기 위해 `list_`라는 변수명을 사용하고 있다.
+
+### 외래 키 관계
+
+```
+AssertionError: 'List object' != <List: List object>
+```
+!= 양쪽을 주의 깊게 보자. Django가  List 객체를 문자열로 해석해서 저장하고 있다. 객체 자체를 저장하려면 ForeignKey를 이용해서 두 클래스 간의 관계를 Django에세 알려줘야 한다.
+
+>마이그레이션을 삭제하는 것은 위험하다. 데이터베이스에 이미 적용된 마이그레이션을 삭제하면, Django가 상태를 파악하지 못하고 이후 마이그레이션을 어떻게 적용해야 할지 혼란스러워하게 된다. 마이그레이션이 더 이상 필요하지 않다는 확신이 있을 때만 삭제하도록 하자. 일반적으론 **버전 관리 시스템에 커밋한 마이그레이션은 절대 삭제하지 말아야 한다.**
+
+#### 나머지 세상을 위한 새로운 모델
+```
+  File "/Users/makingfunk/DK_Study/TDD/superlists/lists/views.py", line 14, in new_list
+    Item.objects.create(text=request.POST['item_text'])
+```
+이 에러 메세지는 발생은 하나 찾기 힘들다. views 파일에서 일어난것을 힌트로 찾으면 된다. (2개의 에러 각각 중간쯤에 있다)
+
+### 각 목록이 하나의 고유 URL을 가져야 한다
+목록을 위한 고유 식별자로 어떤 것을 사용할까? 이 시점에서는 DB가 자동생성하는 id 필드일 것이다.
+LiveViewTest를 수정해서 두 테스트가 새로운 URL을 가리키도록 하자.
+
+#### URL에서 파라미터 취득하기
+URL을 통해 어떻게 파라미터가 전달될까.
+
+```
+ url(r'^lists/(.+)/$', 'lists.views.view_list', name='view_list'),
+```
+URL용 정규표현을 수정해서 캡처그룹(capture group)(.+)을 추가한다. 캡처그룹은 '/' 뒤에 나오는 모든 문자에 일치된다. 취득한 텍스트는 인수 형태로 뷰에 전달된다.
+즉, URL이 '/list/1/'이면 일반 요청 인수 다음에 있는 두번째 인수, 즉 '1'이 `view_list`에 전달된다. '/lists/foo/'인 경우 `view_list(request, "foo")`가 된다.
+
+```python
+	url(r'^lists/new$', 'lists.views.new_list', name='new_list'),
+    url(r'^lists/(.+)/$', 'lists.views.view_list', name='view_list'),
+    
+->
+
+    url(r'^lists/new$', views.new_list, name='new_list'),
+    url(r'^lists/(.+)/$', views.view_list, name='view_list'),
+```
+
+view 연결할때 '를 빼야한다. 교재와 실습환경의 Django 버전차이인듯 하다.
+
+```
+ERROR: test_displays_only_items_for_that_list (lists.tests.ListViewTest)
+ERROR: test_uses_list_template (lists.tests.ListViewTest)
+ERROR: test_redirects_after_POST (lists.tests.NewListTest)
+[...]
+TypeError: view_list() takes 1 positional argument but 2 were given
+```
+views.py에 더미(dummy) 파라미터를 적용해서 이 문제를 쉽게 해결할 수 있다.
+
+### 새로운 세상으로 가기 위한 `new_list`수정
+
+```
+#교재
+AssertionError: '2: Use peacock feathers to make a fly' not found in ['1: Use
+peacock feathers to make a fly']
+
+#현실...
+AssertionError: '1: Buy peacock feathers' not found in ['1: Use peacock feathers to make a fly']
+```
+어딘가 오타가 있는거 아닌가 했는데 찾지 못하겠다........
+
+### 기존 목록에 아이템을 추가하기 위한 또 다른 뷰
+### 욕심 많은 정규표현을 조심하자!
+아직 lists/1/add_item URL  을 지정하지 않았으니 예상한 에러는 404 != 302이다. 왜 301 에러가 발생하였을까?
+
+바로 URL에 포함된 '욕심 많은' 정규표현식 때문이다.
+
+```
+url(r'^lists/(.+)/$', views.view_list, name='view_list'),
+```
+Django는 영구적 리디렉션(301)에 대한 내부적인 이슈가 있어서 슬래시가 누락되는 경우 문제가 발생한다. 이 경우는 `/lists/1/add_item/` 이 `lists/(.+)/` 에 의해 매칭된다. `(.+)`가 `1/add_item`을 캡쳐하기 때문이다. 결국 Django는 우리가 마지막 꼬리 슬래시를 원한다는 '훌륭한' 추측을 한다.
+이것은 URL에서 숫자만 추출하도록 수정하면 된다. 이때 쓰는 정규표현이 `\d`이다.
+
+```
+url(r'^lists/(\d+)/$', views.view_list, name='view_list'),
+```
+
+### 마지막 신규 URL
+이제 예측한 대로 404 상태를 취하고 있다. 기존 목록에 신규 아이템을 추가하는 URL을 만들자.
+
+마지막 에러는 책과 사이트가 서로 다르다.
+실습에서는 사이트에서 나온 오류가 발생한다.
+
+```
+AttributeError: 'module' object has no attribute 'add_item'
+```
+
+### 마지막 신규 뷰
