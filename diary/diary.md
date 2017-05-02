@@ -703,7 +703,7 @@ SastCampus 정규 과정이 모두 끝남.
 일단 AWS 부터 복습시작해보자!!
 
 
-## 04/30
+<!--## 04/30
 
 개발자가 맥북 포맷후 해야할 것들.
 
@@ -770,8 +770,8 @@ pyenv install 3.5.2
 ```
 xcode-select --install
 ```
-
-### Vim 단축키
+-->
+<!--### Vim 단축키
 
 i : 현재 위치에 insert  
 I : 현재 줄 맨앞에 insert  
@@ -792,9 +792,9 @@ y : 복사
 c : 잘라내기  
 v : 비쥬얼모드  
 
-일단 자주 쓰는것만.
+일단 자주 쓰는것만.-->
 
-## 05/01
+<!--## 05/01
 
 ### Jekyll 으로 블로그 만들기
 <http://jekyllrb-ko.github.io/>
@@ -869,3 +869,10 @@ Pygments. 코드를 이쁘게 보여준다
 <http://jekyllrb-ko.github.io/>
 <https://nolboo.kim/blog/2013/10/15/free-blog-with-github-jekyll/>
 <https://brunch.co.kr/@hee072794/39>
+-->
+
+## 05/02
+
+commit을 했는데 contribution graph에 적용이 안되는 현상이 발생했다.
+
+오늘 공부할 내용이 정해졌다.
