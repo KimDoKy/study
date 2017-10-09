@@ -1,21 +1,21 @@
-## 04/14
+<!--## 04/14
 
-### Django REST framework Tutorial 재진행
+### Django REST framework Tutorial 재진행-->
 
 
-#### Router
+<!--#### Router
 
 class based view 에서 URL을 자동으로 정리해 준다.
 
 ViewSet 만 적용된다.
 
-APIView 는 안된다.
+APIView 는 안된다.-->
 
-## 04/15
+<!--## 04/15
 
-#### permission
+#### permission-->
 
-게시물에 대해 댓글 기능 구현중..
+<!--게시물에 대해 댓글 기능 구현중..
 
 댓글은 작성자만 편집할 수 있고 보기는 누구나 가능해야 한다.
 
@@ -79,7 +79,9 @@ class PostComment(models.Model):
         ordering = ('created_date',)
 ```
 
-## 04/16
+-->
+
+<!--## 04/16
 
 계획을 변경하여 content view api에서 content의 comment를 바로 출력하기로 함.
 
@@ -136,8 +138,8 @@ comment 모델을 지정하였지만 동작하지 않는다...
 [참고문서 REST](https://github.com/KimDoKy/DjangoRestFramework-Tutorial/blob/master/doc/Django%20REST%20Framework%20-%2011.%20Serializer%20relations.md)
 
 > 구현하려던 serializer(두개 이상의 모델을 중첩으로 보여주는 serializer)는 APIView에서는 구현이 가능하지만 ViewSet에서는 동작하지 않는다.
-
-## 04/17
+-->
+<!--## 04/17
 
 ManyToManyField 로 모델간의 관계를 형성하고 migrations를 하면
 
@@ -233,8 +235,8 @@ ForeignKey로 선언된 필드는 중간자 모델에서 필드명_id 으로 생
 MTM을 사용하면 중간자 모델은 직접 생성하지 않아도 기본적으로 생성이 된다.
 
 models.py 작성시 SQL문이 어떻게 실행되는지 더 공부해야 할 필요가 있다. ([Django Model Document](https://docs.djangoproject.com/en/1.11/topics/db/models/))
-
-## 04/18
+-->
+<!--## 04/18
 
 현재 진행하는 프로젝트에서는 데이터는 공공데이터 api를 통하여 정보를 제공해주고 있다. 공공 데이터는 xml으로 데이터를 넘겨주기 때문에 JSON으로 파싱하여 for을 이용해서 DB에 저장한다.
 그리고 DB에 있는 데이터를 프론트단의 요청에 따라 분류하여 serializer하려 데이터를 보내주는 api이다.
@@ -290,9 +292,9 @@ def xml_parser_db_save(request):
 위 코드는 공공 데이터에서 받아온 xml 데이터를 JSON으로 파싱하여 DB에 저장하는 코드이다.
 
 공공데이터에서 파라미터 값이 잘못되면 오류가 일어나는게 아니라  데이터가 빈 값으로 들어오기 때문에 예외처리를 DB를 저장하는 부분에 선언하였다.
-except에 error_message를 바로 리턴해주게 하였기 때문에 서버단에서도 협업하는 사람들도 오류가 왜 일어났는지 바로 알 수 있게되었다.
+except에 error_message를 바로 리턴해주게 하였기 때문에 서버단에서도 협업하는 사람들도 오류가 왜 일어났는지 바로 알 수 있게되었다.-->
 
-## 04/19
+<!--## 04/19
 
 REST search parameter 를 커스텀 해달라는 요청이 들어왔다.
 
@@ -310,8 +312,8 @@ REST search는 `filters.SearchFilter`를 명시해줌으로써 사용이 가능�
 
 하지만 문제점이 있다. Git에는 가상환경에 설정한 부분이 포함되지 않는다. 협업에 적용이 되지 않는다.
 배포 담당자가 서버에 직접 접속하여 rest_frame에 들어가서 설정값을 변경해주면 가능할 것 같지만, 위험하고 비효율적인것 같다. 다른 방법을 찾아야 한다. 
-
-## 04/20
+-->
+<!--## 04/20
 
 ```python
 REST_FRAMEWORK = {
@@ -342,17 +344,17 @@ Comment 개선사항
 
 2. 추가, 수정, 삭제 조건
 
+-->
 
-
-## 04/22 ~
+<!--## 04/22 ~
 TDD 실습 시작
 
-TDD 내용은 [이곳](https://github.com/KimDoKy/study/blob/master/TDD/TDD(Test-Driven%20Development).md)에 추가 된다.
+TDD 내용은 [이곳](https://github.com/KimDoKy/study/blob/master/TDD/TDD(Test-Driven%20Development).md)에 추가 된다.-->
 
-## 04/23
-MarkDown에서 편집시 내용중 `<title>` 이 있다면 꼭 `을 넣어주도록 하자. html tag가 적용되어 markdown 입력에 문제가 생긴다.
+<!--## 04/23
+MarkDown에서 편집시 내용중 `<title>` 이 있다면 꼭 `을 넣어주도록 하자. html tag가 적용되어 markdown 입력에 문제가 생긴다.-->
 
-## 04/24
+<!--## 04/24
 TDD 6장 하는중... 교재에 있는 에러가 발생하지 않는다......
 >
 "이것은 Django 테스트 클라이언트가 뷰 함수에서 약간 다른 방식으로 동작하기 때문이다. 즉 도메인을 상대 URL에 추가하는 Django 스택을 사용하고 있기 때문이다. 2 단계 리디렉션 확인 방법 대신에 Django가 제공하는 헬퍼 함수를 사용하도록 한다."
@@ -368,9 +370,9 @@ TDD 6장 하는중... 교재에 있는 에러가 발생하지 않는다......
 일단 요구하는 결과는 같다...일단 스킵.
 [테스트 클라이언트](https://docs.djangoproject.com/en/1.11/topics/testing/tools/)를 더 공부해보자.
 
-추가. 마이그레이션 다루는 법을 더 익혀야함. (ex. fake)
+추가. 마이그레이션 다루는 법을 더 익혀야함. (ex. fake)-->
 
-#### 궁금증!
+<!--#### 궁금증!
 ```
 self.assertRedirects(response, '/lists/%d' % (correct_list.id,))
 ```
@@ -388,7 +390,7 @@ def add_item(request):
 def add_item(request, list_id):
     pass
 ```
-이렇게 인수를 맞추어 주면 된다.
+이렇게 인수를 맞추어 주면 된다.-->
 
 ## 04/25
 
@@ -424,7 +426,7 @@ AWS에서 배포를 위해 EC2, ECS, EB등 여러가지가 있는데 EC2직접�
 
 OAuth 인증 (소셜로그인)과 배포(AWS,EC2,Docker..)으로 스터디 방향을 바꿈.
 
-**MaxOS Sierra ` 입력 이슈 tip**
+<!--**MaxOS Sierra ` 입력 이슈 tip**
 
 ```
 cd ~/Library
@@ -435,11 +437,11 @@ vi DefaultkeyBinding.dict
 {
         "₩" = ("insertText:", "`");
 }
-```
+```-->
 ## 04/26
 25~26일에 거쳐 [프로젝트 API](https://kimdoky.gitbooks.io/pm0603-project-api-document/) 문서를 재정리 하였음.  
 
-
+<!--
 ### [OAuth](http://d2.naver.com/helloworld/24942)
 
 최근 인터넷 서비스들은 서비스 중에서 사용자가 일부 필요한 것만 사용할 수 있게 하는 SaaS(Softwarer as a Service)의 형태로 서비스된다.(Facebook, 트위터  등)
@@ -488,8 +490,8 @@ Access Token|인증 후 Consumer가 Service Provider의 자원에 접근하기 �
 4. 키 생성.  3번 과정을 거쳐 생성한 문자열을 암호화한다. 암호화할 때 Consumer Secret Key를 사용한다. Consumer Secret Key는 Consumer가 Service Provider에 사용 등록할때 발급받은 값이다.
 -->
 
-#### OAth 2.0
-OAuth 1.0은 웹 애플리케이션이 아닌 애플리케이션에서는 사용하기 곤한하고, 절차가 복잡하여 OAuth 구현 라이브러리흫 제작하기 어렵고, 이런저런 복잡한 절차 때문에 Service Provider에게도 연산 부담이 발생한다.
+<!--#### OAth 2.0
+OAuth 1.0은 웹 애플리케이션이 아닌 애플리케이션에서는 사용하기 곤란하고, 절차가 복잡하여 OAuth 구현 라이브러리를 제작하기 어렵고, 이런저런 복잡한 절차 때문에 Service Provider에게도 연산 부담이 발생한다.
 
 이러한 단점을 개선한 것이 OAuth 2.0 이다. OAuth 1.0과 호환성이 없고, 아직 최종안이 발표되지 않았지만 많은 기업이 OAuth 2.0을 사용하고 있디.
 
@@ -635,7 +637,8 @@ SOCIAL_AUTH_FACEBOOK_SECRET = 'Facebook App Secret Key'
 [Javier Aguirre|사용자 프로필 만들기](http://javaguirre.me/2013/11/06/creating-a-user-profile-in-python-social-auth-in-django/)
 >
 [Django에서 social login library 사용](http://i5on9i.blogspot.kr/2016/01/django-social-log-in-library.html)
-
+-->
+-->
 ## 04/27
 
 하이어링데이 준비용 인덱스 페이지 준비
@@ -653,7 +656,7 @@ Class Based View(CBV)를 사용하는 이유 - 재사용이 가능하기 때문�
 이메일 인증
 <https://sendgrid.com/docs/Integrate/Frameworks/django.html>
 
-
+<!--
 
 DAU : Daily Active User
 
@@ -670,8 +673,8 @@ LTV : Life Time Value
 <http://analytics.toast.com/support/guide>
 
 <http://mategame.tistory.com/21>
-
-## 04/28
+-->
+<!--## 04/28
 
 Docker 공부중.
 
@@ -679,10 +682,10 @@ supervisord 는 서버상에서 지정한 프로그램이 다운되면 다시 �
 
 supervisord는 Docker를 통해 이용시 demon을 off로 설정하여 이미지를 빌드해주어야 한다.
 
-<http://hochulshin.com/python-supervisord/>
+<http://hochulshin.com/python-supervisord/>-->
 
 
-## 04/29
+<!--## 04/29
 
 hiring day 끝.
 
@@ -700,7 +703,7 @@ SastCampus 정규 과정이 모두 끝남.
 
 ![](./images/expecte.jpg)
 
-일단 AWS 부터 복습시작해보자!!
+일단 AWS 부터 복습시작해보자!!-->
 
 
 <!--## 04/30
@@ -871,8 +874,8 @@ Pygments. 코드를 이쁘게 보여준다
 <https://brunch.co.kr/@hee072794/39>
 -->
 
-## 05/02
+<!--## 05/02
 
 commit을 했는데 contribution graph에 적용이 안되는 현상이 발생했다.
 
-오늘 공부할 내용이 정해졌다.
+오늘 공부할 내용이 정해졌다.-->
