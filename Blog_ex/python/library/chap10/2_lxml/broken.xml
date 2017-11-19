@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weather>
+  <local_weather name="Seoul">
+    <condition>Sunny</condition>
+    <temperature>25</temperature>
+    <humidity>47</humidity>
+</weather>
