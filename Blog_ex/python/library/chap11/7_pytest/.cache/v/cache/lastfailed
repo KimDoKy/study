@@ -1,0 +1,6 @@
+{
+  "test_sample2.py::test_upper": true,
+  "test_sample3.py::test_indigit": true,
+  "test_sample3.py::test_indigit[Foo]": true,
+  "test_sample3.py::test_isdigit": true
+}
