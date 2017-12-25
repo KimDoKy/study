@@ -1,6 +1,7 @@
 from os.path import basename
 import requests
 from django.core.files import File
+from django.shortcuts import render
 from .decorators import bot
 from .models import Post
 
@@ -44,3 +45,9 @@ def on_block(request, user_key):
 @bot
 def on_leave(request, user_key):
     pass
+
+def post_list(request, user_key):
+    qs = Post.objects.filter(user__username=user_key)
+    return render(request, 'plusfriend/post_list.html', {
+        'post_list': qs,
+    })
