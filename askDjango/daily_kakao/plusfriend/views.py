@@ -1,3 +1,6 @@
+from os.path import basename
+import requests
+from django.core.files import File
 from .decorators import bot
 from .models import Post
 
@@ -8,11 +11,17 @@ def on_init(request):
 @bot
 def on_message(request):
     user_key = request.JSON['user_key']
-    type = request.JSON['type']
+    type = request.JSON['type']  # text, photo, audio(m4a), video(mp4)
     content = request.JSON['content'] # photo 타입일 경우에는 이미지 URL
 
     if type == 'photo':
-        response = '사진 저장은 아직 지원하지 않습니다.'
+        img_url = content
+        img_name = basename(img_url)
+        res = requests.get(img_url, stream=True)
+        post = Post(user=request.user)
+        post.photo.save(img_name, File(res.raw))
+        post.save()
+        response = '사진을 저장했습니다.'
     else:
         post = Post.objects.create(user=request.user, message = content)
         response = '포스팅을 저장했습니다.'
