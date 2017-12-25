@@ -1,4 +1,5 @@
 from .decorators import bot
+from .models import Post
 
 @bot
 def on_init(request):
@@ -8,8 +9,15 @@ def on_init(request):
 def on_message(request):
     user_key = request.JSON['user_key']
     type = request.JSON['type']
-    content = request.JSON['content']
-    response = '아직 구현 전입니다.'
+    content = request.JSON['content'] # photo 타입일 경우에는 이미지 URL
+
+    if type == 'photo':
+        response = '사진 저장은 아직 지원하지 않습니다.'
+    else:
+        post = Post.objects.create(user=request.user, message = content)
+        response = '포스팅을 저장했습니다.'
+
+
     return {
         'message': {
             'text': response,
