@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import View, TemplateView
 
@@ -39,5 +41,14 @@ class PostListView3(View):
 post_list3 = PostListView3.as_view()
 
 
-class ExcelDownloadView(object):
-    pass
+class ExcelDownloadView(View):
+    excel_path = os.path.join(settings.BASE_DIR, 'sample.xlsx')
+
+    def get(self, request):
+        filename = os.path.basename(self.excel_path)
+        with open(self.excel_path, 'rb') as f:
+            response = HttpResponse(f, content_type='application/vnd.ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+            return response
+
+excel_download = ExcelDownloadView.as_view()
