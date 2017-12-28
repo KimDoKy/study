@@ -9,4 +9,5 @@ urlpatterns = [
     path('excel_down', views.excel_download),
 
     path('cbv/post_list1', views_cbv.post_list1),
+    path('cbv/post_list2', views_cbv.post_list2),
 ]
