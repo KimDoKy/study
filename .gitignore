@@ -1,3 +1,6 @@
 .idea/
 .python-version
 .DS_Store
+.swp
+.pyc
+__pycache__
