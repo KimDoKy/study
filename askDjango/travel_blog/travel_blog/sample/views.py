@@ -10,3 +10,8 @@ def post_list1(request):
         <p>{type}</p>
         <p>{type} 테스트 페이지입니다.</p>'''.format(type=type)) 
 
+
+def post_list2(request):
+    type = 'render type'
+    return render(request, 'sample/post_list.html', {'type':type})
+
