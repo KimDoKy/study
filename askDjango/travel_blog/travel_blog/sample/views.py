@@ -1,4 +1,3 @@
-import os
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 # Create your views here.
@@ -15,3 +14,9 @@ def post_list2(request):
     type = 'render type'
     return render(request, 'sample/post_list.html', {'type':type})
 
+
+def post_list3(request):
+    return JsonResponse({
+        'message': 'JsonResponse Type',
+        'items': ['HttpResponse', 'JsonResponse', 'render'],
+    }, json_dump_params={'ensure_ascii': False})
