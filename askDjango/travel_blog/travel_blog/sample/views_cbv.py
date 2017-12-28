@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import View, TemplateView
 
 
@@ -26,8 +26,17 @@ class PostListView2(TemplateView):
 
 post_list2 = PostListView2.as_view()
 
-class PostListView3(object):
-    pass
+class PostListView3(View):
+    def get(self, request):
+        return JsonResponse(self.get_data(), json_dumps_params={'ensure_ascii':False})
+
+    def get_data(self):
+        return {
+            'message': 'CBV JsonResponse',
+            'itmes': ['CBV HttpResponse', 'CBV JsonResponse', 'CBV render'],
+        }
+
+post_list3 = PostListView3.as_view()
 
 
 class ExcelDownloadView(object):

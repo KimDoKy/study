@@ -10,4 +10,5 @@ urlpatterns = [
 
     path('cbv/post_list1', views_cbv.post_list1),
     path('cbv/post_list2', views_cbv.post_list2),
+    path('cbv/post_list3', views_cbv.post_list3),
 ]
