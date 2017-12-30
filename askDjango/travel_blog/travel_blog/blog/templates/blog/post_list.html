@@ -7,6 +7,16 @@
     <title>test page</title>
 </head>
 <body>
+<ul>
+{% for post in post_list %}
+<li>
+{{ post.id }}
+{{ post.title }}
+<small> by {{ post.author }} </small>
+<small> at {{ post.updated_at }} </small>
+</li>
+{% endfor %}
+</ul>
 <h1>테스트</h1>
 <img src="https://ngrok.com/static/img/webhooks.png" width="10px">
 <br>
