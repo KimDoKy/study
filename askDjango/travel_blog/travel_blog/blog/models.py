@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.forms import ValidationError
 import re
 
@@ -13,7 +14,7 @@ class Post(models.Model):
         ('w', 'Withdrawn'),
     )
 
-    author = models.CharField(max_length=20)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, verbose_name='제목')
     content = models.TextField(help_text='Mark 문법으로 작성하세요.')
     tags = models.CharField(max_length=100, blank=True)
