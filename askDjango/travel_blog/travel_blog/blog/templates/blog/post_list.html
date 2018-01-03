@@ -1,13 +1,6 @@
-<html>
+{% extends "blog/layout.html" %}
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport"
-          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
-    <title>test page</title>
-</head>
-
-<body>
+{% block content %}
 <h1>뉴스 기사 검색</h1>
 <form action="" method="get">
     <input type="text" name="q" value={{ q }}>
@@ -25,5 +18,4 @@
     </li>
     {% endfor %}
 </ul>
-</body>
-</html>
+{% endblock %}
