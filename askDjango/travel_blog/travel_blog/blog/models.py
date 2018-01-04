@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 from django.forms import ValidationError
 import re
 
@@ -29,6 +30,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', args=[self.id])
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
