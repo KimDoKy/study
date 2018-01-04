@@ -1,0 +1,21 @@
+{% extends "blog/layout.html" %}
+
+{% block content %}
+<h1>뉴스 기사 검색</h1>
+<form action="" method="get">
+    <input type="text" name="q" value={{ q }}>
+    <input type="submit" value="검색">
+</form>
+
+<ul>
+    {% for post in post_list %}
+    <li>
+        {{ post.id }}
+        <a href="{% url "blog:post_detail" post.id %}">
+        {{ post.title }} </a>
+        <small> by {{ post.author }} </small>
+        <small> at {{ post.updated_at }} </small>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
