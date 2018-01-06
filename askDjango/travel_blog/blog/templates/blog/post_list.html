@@ -17,6 +17,7 @@
                     <li>http://localhost:8000/blog/ 주소로 접속</li>
                     </ul>
                 </div>
+                <a href="{% url "blog:post_new" %}" class="btn btn-primary pull-right">New Post</a>
                 <p>
                     <form action="" method="get">
                         <input type="text" name="q" value={{ q }}>
