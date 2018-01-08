@@ -46,8 +46,20 @@
         </div>
     </nav>
 
-        {% block content %}
-        {% endblock %}
+    {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    [{{ message.tags }}]
+                    {{ message.message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
     <div id="page-footer">
         <div class="container">
             <p class="text-muted">
