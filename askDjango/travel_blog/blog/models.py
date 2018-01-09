@@ -18,7 +18,7 @@ class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, verbose_name='제목')
     content = models.TextField(help_text='Mark 문법으로 작성하세요.')
-    photo = models.ImageField(blank=True)
+    photo = models.ImageField(blank=True, upload_to='blog/post/%Y/%m/%d')
     tags = models.CharField(max_length=100, blank=True)
     lnglat = models.CharField(max_length=50, validators=[lnglat_validator], help_text='경도/위도 포맷으로 입력하세요.', blank=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
