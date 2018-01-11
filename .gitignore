@@ -4,3 +4,4 @@
 .swp
 .pyc
 __pycache__/
+.conf-secret/
