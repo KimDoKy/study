@@ -10,4 +10,6 @@ urlpatterns = [
     path('new/', views.post_new, name='post_new'),
     path('<pk>/', views_cbv.post_detail, name='post_detail'),
     path('<id>/edit/', views.post_edit, name='post_edit'),
+	path('cbv/new/', views_cbv.post_new),
+	path('cbv/<pk>/edit/', views_cbv.post_edit),
 ]
