@@ -6,7 +6,7 @@ from . import views_cbv
 app_name = 'blog'
 
 urlpatterns = [
-    path('', views_cbv.post_list, name='post_list'),
+    path('', views.post_list, name='post_list'),
 
     path('comments/', views.comment_list, name='comment_list'),
 
