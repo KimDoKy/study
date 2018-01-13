@@ -5,7 +5,7 @@ from .forms import PostForm
 
 
 def post_list(request):
-    qs = Post.objects.all()
+    qs = Post.objects.all().prefetch_related('comment_set', 'tag_set')
     q = request.GET.get('q', '')
     if q:
         qs = qs.filter(title__icontains=q)
