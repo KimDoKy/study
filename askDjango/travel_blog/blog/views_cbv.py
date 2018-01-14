@@ -3,9 +3,13 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import Post
 
-post_list = ListView.as_view(model=Post,
-                             queryset=Post.objects.all().prefetch_related('tag_set', 'comment_set'),
-                             paginate_by=10)
+
+class PostListView(ListView):
+    model = Post
+    queryset = Post.objects.all().prefetch_related('tag_set', 'comment_set')
+    paginate_by = 10
+
+post_list = PostListView.as_view()
 
 post_detail = DetailView.as_view(model=Post)
 
