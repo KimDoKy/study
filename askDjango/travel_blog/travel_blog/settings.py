@@ -24,7 +24,7 @@ COMMON_CONF_FILE = json.loads(open(os.path.join(CONF_DIR, 'config-common.json'))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'yvr8o7p7jy5763ko6r(n5u=lhnbzf$#a!@6%)ldq*8@yqn4w(!'
+SECRET_KEY = COMMON_CONF_FILE['django']['secret']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'raven.contrib.django.raven_compat',
     'imagekit',
     'accounts',
     'blog',
@@ -149,3 +150,22 @@ MESSAGE_TAGS = {constants.DEBUG:'danger'}
 import json
 
 NAVER_CLIENT_ID = COMMON_CONF_FILE['naver']['client_id']
+
+
+import raven
+
+GIT_ROOT = os.path.dirname(os.path.dirname(BASE_DIR))
+
+if os.path.exists(os.path.join(GIT_ROOT, '.git')):
+    release = raven.fetch_git_sha(GIT_ROOT)
+else:
+    release = 'dev'
+
+import raven
+
+RAVEN_CONFIG = {
+    'dsn': COMMON_CONF_FILE['sentry']['dsn'],
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': release
+}
