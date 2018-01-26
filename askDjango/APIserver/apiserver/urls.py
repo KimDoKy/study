@@ -20,4 +20,5 @@ from django.conf.urls import include
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('sample/', include('sample.urls', namespace='sample')),
+	path('apiview/', include('apiview.urls', namespace='apiview')),
 ]
