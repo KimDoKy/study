@@ -1,6 +1,7 @@
 <ul>
 {% for post in post_list %}
-<h1>{{ post.title }}</h1>
+<a href="{% url 'blog:post_detail' post.pk %}">
+<h1>{{ post.title }}</h1></a>
 <li>{{ post.content }}</li>
 {% endfor %}
 </ul>
