@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from .models import Post
 from .forms import PostForm
 
@@ -31,8 +31,15 @@ def post_edit(request, pk):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save()
-            eturn redirect(post)
+            return redirect(post)
         pass
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_form.html', {'form':form})
+
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('blog:post_list')
+    return render(request, 'blog/post_confirm_delete.html', {'post':post})
