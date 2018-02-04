@@ -30,3 +30,13 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=qs)
     return render(request, 'blog/post_form.html', {'form':form})
+
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        if request.POST.get('delete'):
+            post.delete()
+            return redirect('blog:post_list')
+        elif request.POST.get('no'):
+            return redirect(post)
+    return render(request, 'blog/post_confirm.html', {'post':post})
