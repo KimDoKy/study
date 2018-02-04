@@ -3,8 +3,11 @@ from .models import Post
 from .forms import PostForm
 
 def post_list(request):
-    posts = Post.objects.all()
-    return render(request, 'blog/post_list.html', {'posts':posts})
+    qs = Post.objects.all()
+    q = request.GET.get('q')
+    if q:
+        qs = qs.filter(title__icontains=q)
+    return render(request, 'blog/post_list.html', {'posts':qs})
 
 def post_detail(request, pk):
     qs = get_object_or_404(Post, pk=pk)
