@@ -1,6 +1,10 @@
 <ul>
 <h1>{{ post.title }}</h1>
 <br>
+{% if post.photo %}
+<img src="{{ post.photo.url }}">
+<br>
+{% endif %}
 {{ post.content|linebreaks }}
 <br>
 <small>at {{ post.create_at }}</small>
