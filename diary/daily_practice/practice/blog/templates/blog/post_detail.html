@@ -8,3 +8,4 @@
 {{ post.content|linebreaks }}
 <li>at {{ post.create_at }}</li>
 </ul>
+<a href="{% url 'blog:post_list' %}"><input type='button' value='목록으로'></a>
