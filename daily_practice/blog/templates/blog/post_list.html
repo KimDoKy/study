@@ -1,0 +1,6 @@
+<ul>
+{% for post in posts %}
+<h1>{{ post.title }}</h1> at {{ post.create_at }}
+<li>{{ post.content }}</li>
+{% endfor %}
+</ul>
