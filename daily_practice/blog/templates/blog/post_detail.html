@@ -4,4 +4,6 @@
 {% endif %}
 <br>
 {{ post.content }}
-
+<br>
+<a href="{% url 'blog:post_list' %}">
+<input type='button' value='목록으로'></a>
