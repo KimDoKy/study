@@ -4,6 +4,12 @@
 {% endif %}
 <br>
 {{ post.content }}
-<br>
+<hr>
+<ul>
+{% for comment in post.comment_set.all %}
+    <li>{{ comment.message }}
+        <small>by {{ comment.author }} as {{ comment.update_at }}</small>
+    </li>
+{% endfor %}
 <a href="{% url 'blog:post_list' %}">
 <input type='button' value='목록으로'></a>
