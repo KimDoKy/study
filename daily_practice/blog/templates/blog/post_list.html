@@ -1,0 +1,8 @@
+<ul>
+{% for post in posts %}
+<h1>{{ post.title}}</h1> by {{ post.author }} <br>
+<li>{{ post.content }}</li>
+{% if post.photo %}
+<img src="{{ post.photo.url }}">
+{% endif %}
+{% endfor %}
