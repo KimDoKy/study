@@ -5,3 +5,5 @@ by {{ post.author }} at {{ post.create_at }}<br>
 <img src="{{ post.photo.url }}">
 {% endif %}
 <br>
+<a href="{% url 'blog:post_list' %}">
+<input type='button' value='to list'></a>
