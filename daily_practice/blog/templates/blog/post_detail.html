@@ -5,6 +5,9 @@ by {{ post.author }} at {{ post.create_at }}<br>
 {% if post.photo %}
 <img src="{{ post.photo.url }}">
 {% endif %}
-<br>
+<hr>
+{% for comment in post.comment_set.all %}
+<li>{{ comment.message }} - by {{ comment.author }} at {{ create_at }}</li>
+{% endfor %}
 <a href="{% url 'blog:post_list' %}">
 <input type='button' value='to list'></a>
