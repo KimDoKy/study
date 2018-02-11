@@ -1,0 +1,8 @@
+<h1>{{ post.title }}</h1>
+정말 삭제하시겠습니까?<br>
+<form action='' method='post'>
+    {% csrf_token %}
+    <a href='{% url "blog:post_detail" post.id %}'>
+    <input type='button' value='no'></a>
+    <input type='submit' value='delete'>
+</form>
