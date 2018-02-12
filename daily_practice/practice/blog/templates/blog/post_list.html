@@ -1,12 +1,12 @@
-<form actino='' method='get'>
+<form action='' method='get'>
     <input type='text' name='q'>
     <input type='submit' value='search'>
 </form>
 
 <ul>
 {% for post in posts %}
-<a href='{% url "blog:post_detail" post.id %}'>
+<a href="{% url 'blog:post_detail' post.id %}">
 <h1>{{ post.title }}</h1></a>
-to {{ post.auth }} at {{ post.create_at }}
+{{ post.author }} at {{ post.create_at }}
 {% endfor %}
 </ul>

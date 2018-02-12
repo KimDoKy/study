@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import PostForm
 from .models import Post
+from .forms import PostForm
+
 
 def post_list(request):
     qs = Post.objects.all()
