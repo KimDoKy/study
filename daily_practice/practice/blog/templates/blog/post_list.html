@@ -1,6 +1,7 @@
 <ul>
 {% for post in posts %}
-<h1>{{ post.title }}</h1>
+<a href="{% url 'blog:post_detail' post.id %}">
+<h1>{{ post.title }}</h1></a>
 {{ post.author }} at {{ post.create_at }}
 {% endfor %}
 </ul>
