@@ -6,6 +6,10 @@
 {{ post.content }}<br><br>
 by {{ post.author }} ay {{ post.create_at }}
 <hr>
+{% for comment in post.comment_set.all %}
+<li>{{ comment.message }} <small>by {{ comment.author }} at {{ comment.create_at }}</small></li>
+{% endfor %}
+<hr>
 <a href="{% url 'blog:post_list' %}">
 <input type='button' value='to list'>
 </a>
