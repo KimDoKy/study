@@ -7,6 +7,6 @@
 {% for post in posts %}
 <a href="{% url 'blog:post_detail' post.id %}">
 <h1>{{ post.title }}</h1></a>
-{{ post.author }} at {{ post.create_at }}
+by {{ post.author }} at {{ post.create_at }}
 {% endfor %}
 </ul>
