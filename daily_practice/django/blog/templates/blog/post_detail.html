@@ -1,18 +1,15 @@
 <h1>{{ post.title }}</h1>
+by {{ post.author }} at {{ post.create_at }} <br>
 {% if post.photo %}
-<img src="{{ post.photo.url }}">
+<img src='{{ post.photo.url }}'><br><br>
 {% endif %}
-<br>
-{{ post.content }}<br><br>
-by {{ post.author }} ay {{ post.create_at }}
+<small>{{ post.content }}</small>
 <hr>
 {% for comment in post.comment_set.all %}
-<li>{{ comment.message }} <small>by {{ comment.author }} at {{ comment.create_at }}</small></li>
+<li>{{ comment.message }} - by {{ comment.author }} at {{ comment.create_at }}</li>
 {% endfor %}
 <hr>
-<a href="{% url 'blog:post_list' %}">
-<input type='button' value='to list'>
-</a>
-<a href="{% url 'blog:post_del' post.id %}">
-<input type='button' value='delete'>
-<a>
+<a href='{% url "blog:post_del" post.id %}'>
+<input type='button' value='delete'></a>
+<a href='{% url "blog:post_list" %}'>
+<input type='button' value='to list'></a>
