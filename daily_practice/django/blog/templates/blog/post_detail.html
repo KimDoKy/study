@@ -5,5 +5,7 @@ by {{ post.author }} at {{ post.create_at }} <br>
 {% endif %}
 <small>{{ post.content }}</small>
 <hr>
+<a href='{% url "blog:post_del" post.id %}'>
+<input type='button' value='delete'></a>
 <a href='{% url "blog:post_list" %}'>
 <input type='button' value='to list'></a>
