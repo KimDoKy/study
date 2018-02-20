@@ -113,6 +113,15 @@ AUTHENTICATION_BACKENDS = (
         )
 SITE_ID = 1
 
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'SCPE': [
+            'user',
+            'repo',
+            'read:org',
+            ],
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
