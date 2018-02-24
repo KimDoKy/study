@@ -11,7 +11,7 @@ class Post(models.Model):
     update_at = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return reverse('blog:detail', args=[self.id])
+        return reverse('blog:post_detail', args=[self.id])
 
     def __str__(self):
         return self.title
