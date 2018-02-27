@@ -3,6 +3,10 @@
     <input type='submit' value'search'>
 </form>
 
+{% if user.is_authenticated %}
+<p>Welcome {{ user.username }}</p>
+<p><a href="{% url 'logout' %}">logout</a></p>
+
 <ul>
 {% for post in posts %}
 <a href="{% url 'blog:post_detail' post.id %}">
@@ -13,3 +17,8 @@
 <hr>
 <a href='{% url "blog:post_new" %}'>
 <button>Write Post</button></a>
+
+{% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Login</a>
+{% endif %}
