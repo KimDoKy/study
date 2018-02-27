@@ -6,3 +6,6 @@ by {{ post.author }} at {{ post.create_at }}
 {% endif %}
 <p>{{ post.content|linebreaks }}</p>
 <hr>
+
+<a href="{% url 'blog:post_list' %}">
+<button>to List</button></a>
