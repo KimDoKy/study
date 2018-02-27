@@ -21,7 +21,7 @@ def post_new(request):
             return redirect(post)
     else:
         forms = PostForm()
-    return render(request, 'blog/post_form.html', {'form':forms})
+    return render(request, 'blog/post_form.html', {'forms':forms})
 
 def post_edit(request, pk):
     qs = get_object_or_404(Post, pk=pk)
@@ -32,7 +32,7 @@ def post_edit(request, pk):
             return redirect(post)
     else:
         forms = PostForm(instance=qs)
-    return render(request, 'blog/post_form.html', {'form':forms})
+    return render(request, 'blog/post_form.html', {'forms':forms})
 
 def post_del(request, pk):
     qs = get_object_or_404(Post, pk=pk)
