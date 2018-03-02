@@ -6,6 +6,10 @@
 {% endif %}
 <p>{{ post.content }}</p>
 <hr>
+{% for comment in post.comment_set.all %}
+<li>{{ comment.message }} - by {{ comment.author }} at {{ comment.create_at }}</li>
+{% endfor %}
+<hr>
 <a href="{% url 'blog:post_list' %}">
     <button>To List</button>
 </a>
