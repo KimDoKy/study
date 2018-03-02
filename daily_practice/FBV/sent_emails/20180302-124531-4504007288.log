@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: abmu333@hanmail.net
+Date: Fri, 02 Mar 2018 12:45:31 -0000
+Message-ID: <151999473164.28329.169721952802977197@MacBook-Pro.local>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/accounts/reset/Mg/4u5-41bb1f5e9b73b482172e/
+
+Your username, in case you've forgotten: testuser
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------
