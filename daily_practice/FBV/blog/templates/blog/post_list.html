@@ -10,3 +10,7 @@
 <li>by {{ post.author }} at {{ post.create_at }}</li>
 {% endfor %}
 </ul>
+<hr>
+<a href="{% url 'blog:post_new' %}">
+    <button>new Post</button>
+<a>

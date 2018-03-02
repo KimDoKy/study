@@ -9,3 +9,9 @@
 <a href="{% url 'blog:post_list' %}">
     <button>To List</button>
 </a>
+<a href="{% url 'blog:post_edit' post.id %}">
+    <button>Modify</button>
+</a>
+<a href="{% url 'blog:post_del' post.id %}">
+    <button>Delete</button>
+</a>
