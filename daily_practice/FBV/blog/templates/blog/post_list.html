@@ -9,3 +9,6 @@
 <small>- by {{ post.author }} at {{ post.create_at }}</small>
 {% endfor %}
 </ul>
+<hr>
+<a href="{% url 'blog:post_new' %}">
+<button>New Post</button></a>
