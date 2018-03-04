@@ -1,3 +1,9 @@
+{% if user.is_authenticated %}
+<p>Welcome {{ user.username }}</p>
+<a href="{% url 'logout' %}">
+    <button>Logout</button>
+</a>
+
 <form method='get'>
     <input type='text' name='q'>
     <input type='submit' value='search'>
@@ -12,3 +18,9 @@
 <hr>
 <a href="{% url 'blog:post_new' %}">
 <button>New Post</button></a>
+{% else %}
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">
+    <button>Login</button>
+</a>
+{% endif %}
