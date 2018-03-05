@@ -10,9 +10,5 @@
 <small>by {{ post.author }}</small>
 {% endfor %}
 </ul>
-<form method='get'>
-    <input='text' name='q'>
-    <input='submit' value='search'>
-</form>
-
-
+<hr>
+<a href="{% url 'blog:post_new' %}"><button>new Post</button></a>
