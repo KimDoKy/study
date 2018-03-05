@@ -1,5 +1,18 @@
+<form method='get'>
+    <input type='text' name='q'>
+    <input type='submit' value='search'>
+</form>
+
+<ul>
 {% for post in posts %}
 <a href="{% url 'blog:post_detail' post.id %}">
 <h2>{{ post.title }}</h2></a>
 <small>by {{ post.author }}</small>
 {% endfor %}
+</ul>
+<form method='get'>
+    <input='text' name='q'>
+    <input='submit' value='search'>
+</form>
+
+
