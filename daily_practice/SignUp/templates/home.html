@@ -4,4 +4,5 @@ Hi {{ user.username }}!!
 {% else %}
 <a href="{% url 'signup' %}"><button>SignUp</button></a>
 <a href="{% url 'login' %}"><button>Login</button></a>
+<a href="{% url 'password_reset' %}"><button>Reset pass</button></a>
 {% endif %}
