@@ -1,4 +1,5 @@
 {% for post in posts %}
-<h2>{{ post.title }}</h2>
+<a href="{% url 'blog:post_detail' post.id %}">
+<h2>{{ post.title }}</h2></a>
 <small>by {{ post.author }}</small>
 {% endfor %}
