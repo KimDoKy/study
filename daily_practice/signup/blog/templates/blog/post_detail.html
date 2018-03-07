@@ -1,0 +1,21 @@
+<h2>{{ post.title }}</h2>
+<small>by {{ post.author }} at {{ post.create_at }}</small>
+<hr>
+{% if post.photo %}
+<img src="{{ post.photo.url }}">
+{% endif %}
+<p>{{ post.content|linebreaks }}</p>
+<hr>
+{% for comment in post.comment_set.all %}
+<li>{{ comment.message }} - by {{ comment.author }} at {{ comment.create_at }}</li>
+{% endfor %}
+<hr>
+<a href="{% url 'blog:post_list' %}">
+    <button>to list</button>
+</a>
+<a href="{% url 'blog:post_edit' post.id %}">
+    <button>modify</button>
+</a>
+<a href="{% url 'blog:post_del' post.id %}">
+    <button>delete</button>
+</a>
