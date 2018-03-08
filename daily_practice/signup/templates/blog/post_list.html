@@ -1,3 +1,6 @@
+{% extends 'home.html' %}
+
+{% block content %}
 <form method='get'>
     <input type='text' name='q'>
     <input type='submit' value='search'>
@@ -11,3 +14,4 @@
 <a href="{% url 'blog:post_new' %}">
     <button>write post</button>
 </a>
+{% endblock %}
