@@ -7,3 +7,7 @@
 <a href="{% url 'blog:post_detail' post.id %}">
 <h2>{{ post.title }}</h2></a>
 {% endfor %}
+<hr>
+<a href="{% url 'blog:post_new' %}">
+    <button>write post</button>
+</a>
