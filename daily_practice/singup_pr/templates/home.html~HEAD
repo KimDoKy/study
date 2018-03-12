@@ -1,5 +1,5 @@
 {% if user.is_authenticated %}
-Welcome {{ user.username }}
+welcome {{ user.username }}
 <a href="{% url 'logout' %}">
     <button>Logout</button>
 </a>
@@ -12,3 +12,6 @@ Login...
     <button>Signup</button>
 </a>
 {% endif %}
+
+{% block content %}
+{% endblock %}
