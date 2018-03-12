@@ -6,6 +6,10 @@
     <img src="{{ post.photo.url }}">
 {% endif %}
 <hr>
+{% for comment in post.comment_set.all %}
+<li>{{ comment.message }} - by {{ comment.author }} at {{ comment.crate_at }}</li>
+{% endfor %}
+<hr>
 <a href="{% url 'blog:post_list' %}">
     <button>return list</button>
 </a>
