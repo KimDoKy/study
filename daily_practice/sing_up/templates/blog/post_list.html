@@ -1,3 +1,8 @@
+{% extends 'home.html' %}
+
+{% block title %}Post List{% endblock %}
+
+{% block content %}
 <form method='get'>
     <input type='text' name='q'>
     <input type='submit' value='search'>
@@ -18,3 +23,4 @@
 <a href="{% url 'blog:post_new' %}">
     <button>write</button>
 </a>
+{% endblock %}
