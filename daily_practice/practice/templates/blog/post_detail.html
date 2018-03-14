@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<h2>{{ post.title }}</h2>
+<small>by {{ post.author }}</small>
+<hr>
+<p>{{ post.content|linebreaks }}</p>
+{% if post.photo %}
+    <img src="{{ post.photo.url }}">
+{% endif %}
+<hr>
+{% for comment in post.comment_set.all %}
+    <li>{{ comment.message }} - by {{ comment.author }}</li>
+{% endfor %}
+<hr>
+<a href="{% url 'blog:post_list' %}">
+    <button>return list</button>
+</a>
+<a href="{% url 'blog:post_edit' post.id %}">
+    <button>modify</button>
+</a>
+<a href="{% url 'blog:post_del' post.id %}">
+    <button>delete</button>
+</a>
+{% endif %}
+{% endblock %}
