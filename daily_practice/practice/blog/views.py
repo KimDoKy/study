@@ -1,3 +1,4 @@
-from django.shortcuts import render
+from .models import Post
+from django.views.generic import ListView
 
-# Create your views here.
+post_list = ListView.as_view(model=Post)

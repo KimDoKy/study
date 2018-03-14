@@ -1,0 +1,13 @@
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Info</th>
+    </tr>
+    {% for post in post_list %}
+    <tr>
+        <td>{{ post.title }}</td>
+        <td>{{ post.author }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
