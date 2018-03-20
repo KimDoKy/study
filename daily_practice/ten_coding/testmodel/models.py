@@ -6,4 +6,5 @@ class TestModel(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     end_intern = models.DateTimeField(default=datetime.now()+timedelta(days=90))
     photo = models.ImageField(blank=True)
-    gps = models.CharField(max_length=20, blank=True)
+    lat = models.CharField(max_length=10, blank=True)
+    lng = models.CharField(max_length=10, blank=True)

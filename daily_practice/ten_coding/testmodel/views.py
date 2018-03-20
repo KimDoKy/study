@@ -8,7 +8,7 @@ def test_view(request):
     for instance in qs:
         try:
             photo_path = instance.photo.path
-            instance.gps = get_gps(photo_path)
+            instance.lat, instance.lng = get_gps(photo_path)
             instance.save()
         except KeyError as e:
             print(instance.id, e)

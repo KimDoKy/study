@@ -1,13 +1,48 @@
+<body>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap">
+</script>
+<style>
+{% for num in testmodel_list %}
+    {% if num.lng == "1" %}
+    {% else %}
+    #map{{ num.id }} {
+        height: 300px;
+        width: 100%;
+    }
+    {% endif %}
+{% endfor %}
+</style>
+<script>
+    function initMap() {
+        {% for gps in testmodel_list %}
+        {% if gps.lng == "1" %}
+        {% else %}
+        var uluru{{ gps.id }} = {lat: {{ gps.lat }}, lng: {{ gps.lng }} };
+        var map{{ gps.id }} = new google.maps.Map(document.getElementById('map{{ gps.id }}'), {
+            zoom: 18,
+            center: uluru{{ gps.id }}
+        });
+        var marker{{ gps.id }} = new google.maps.Marker({   
+            position: uluru{{ gps.id }},
+            map: map{{ gps.id }}
+        });
+        {% endif %}
+        {% endfor %}
+    }
+    </script>
+
 {% for test in testmodel_list %}
     Create_at : {{ test.create_at }}<br>
     End intern day : {{ test.end_intern }}<br>
-    {% if test.gps == "1" %}
+    {% if test.lng == "1" %}
         GPS : no gps<br>
     {% else %}
-        GPS : {{ test.gps }}<br>
+        GPS : {{ test.lng }}, {{ test.lat }}<br>
+        <div id="map{{ test.id }}"></div>
     {% endif %}
     {% if test.photo %}
         <img src='{{ test.photo.url }}' height='50' width='50'>
     {% endif %}
-    <hr>
+   <hr>
 {% endfor %}
+</body>
