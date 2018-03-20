@@ -1,0 +1,13 @@
+{% for test in testmodel_list %}
+    Create_at : {{ test.create_at }}<br>
+    End intern day : {{ test.end_intern }}<br>
+    {% if test.gps == "1" %}
+        GPS : no gps<br>
+    {% else %}
+        GPS : {{ test.gps }}<br>
+    {% endif %}
+    {% if test.photo %}
+        <img src='{{ test.photo.url }}' height='50' width='50'>
+    {% endif %}
+    <hr>
+{% endfor %}
