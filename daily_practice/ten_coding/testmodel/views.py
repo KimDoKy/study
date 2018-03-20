@@ -9,6 +9,7 @@ def test_view(request):
         try:
             photo_path = instance.photo.path
             instance.gps = get_gps(photo_path)
+            instance.save()
         except KeyError as e:
             print(instance.id, e)
         except ValueError as e:
