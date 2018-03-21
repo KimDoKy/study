@@ -1,5 +1,5 @@
 <body>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap">
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3vsoSAYyx9R5ohDgg18pfN5FbO5PWc7g&callback=initMap">
 </script>
 <style>
 {% for num in testmodel_list %}
@@ -17,6 +17,12 @@
         {% for gps in testmodel_list %}
         {% if gps.lng == "1" %}
         {% else %}
+        var img{{ gps.id }} = {
+                url: '{{ gps.photo.url }}',
+                size: new google.maps.Size(20, 20),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(0, 32)
+            };
         var uluru{{ gps.id }} = {lat: {{ gps.lat }}, lng: {{ gps.lng }} };
         var map{{ gps.id }} = new google.maps.Map(document.getElementById('map{{ gps.id }}'), {
             zoom: 18,
@@ -24,7 +30,8 @@
         });
         var marker{{ gps.id }} = new google.maps.Marker({   
             position: uluru{{ gps.id }},
-            map: map{{ gps.id }}
+            map: map{{ gps.id }},
+            icon: img{{ gps.id }}
         });
         {% endif %}
         {% endfor %}
@@ -33,7 +40,6 @@
 
 {% for test in testmodel_list %}
     Create_at : {{ test.create_at }}<br>
-    End intern day : {{ test.end_intern }}<br>
     {% if test.lng == "1" %}
         GPS : no gps<br>
     {% else %}
