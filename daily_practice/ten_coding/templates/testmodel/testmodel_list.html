@@ -17,12 +17,12 @@
         {% for gps in testmodel_list %}
         {% if gps.lng == "1" %}
         {% else %}
-        var img{{ gps.id }} = {
-                url: '{{ gps.photo.url }}',
-                size: new google.maps.Size(20, 20),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(0, 32)
-            };
+        var IconImage = new google.maps.MarkerImage(
+                "{{ gps.photo.url }}",
+                null,
+                null,
+                null,
+                new google.maps.Size(100, 100));
         var uluru{{ gps.id }} = {lat: {{ gps.lat }}, lng: {{ gps.lng }} };
         var map{{ gps.id }} = new google.maps.Map(document.getElementById('map{{ gps.id }}'), {
             zoom: 18,
@@ -31,7 +31,7 @@
         var marker{{ gps.id }} = new google.maps.Marker({   
             position: uluru{{ gps.id }},
             map: map{{ gps.id }},
-            icon: img{{ gps.id }}
+            icon: IconImage,
         });
         {% endif %}
         {% endfor %}
@@ -47,7 +47,7 @@
         <div id="map{{ test.id }}"></div>
     {% endif %}
     {% if test.photo %}
-        <img src='{{ test.photo.url }}' height='50' width='50'>
+        <img src='{{ test.photo.url }}' height='150' width='150'>
     {% endif %}
    <hr>
 {% endfor %}
