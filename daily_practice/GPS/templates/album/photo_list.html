@@ -1,0 +1,5 @@
+{% for photo in qs %}
+    {{ photo.title }}
+    <img src="{{ photo.photo.url }}" width='100'>
+{% endfor %}
+{{ api }}
