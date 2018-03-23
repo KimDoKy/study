@@ -1,5 +1,41 @@
-{% for photo in qs %}
-    {{ photo.title }}
-    <img src="{{ photo.photo.url }}" width='100'>
+{% extends 'home.html' %}
+
+{% block content %}
+{% for ins in qs %}
+<style>
+    #map_{{ ins.id }} {
+        height: 200px;
+        width: 100%;
+     }
+</style>
+
+    <img src="{{ ins.photo.url }}" width='100'>
+    <p>GPS : {{ ins.lng }}, {{ ins.lat }}</p>
+<script>
+    function initMap() {
+        var IconImage = new google.maps.MarkerImage(
+                '{{ ins.photo.url }}',
+                null,
+                null,
+                null,
+                new google.maps.Size(100,100));
+        var GPS_{{ ins.id }} = {lat: {{ ins.lat }}, lng: {{ ins.lng }} };
+        var map_{{ ins.id }} = new google.maps.Map(document.getElementById('map_{{ ins.id }}'), {
+            zoom: 18,
+            center: GPS_{{ ins.id }},
+            });
+        var marker_{{ ins.id }} = new google.maps.Marker({
+            position: GPS_{{ ins.id }},
+            map: map_{{ ins.id }},
+            icon: IconImage,
+            });
+    }
+</script>
+
+<div id='map_{{ ins.id }}'></div>
+
+<hr>
+
 {% endfor %}
-{{ api }}
+
+{% endblock %}
