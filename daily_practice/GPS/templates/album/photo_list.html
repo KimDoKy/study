@@ -1,18 +1,18 @@
 {% extends 'home.html' %}
 
 {% block content %}
-{% for ins in qs %}
 <style>
+{% for ins in qs %}
     #map_{{ ins.id }} {
         height: 200px;
         width: 100%;
      }
+{% endfor %}
 </style>
-
-    <img src="{{ ins.photo.url }}" width='100'>
-    <p>GPS : {{ ins.lng }}, {{ ins.lat }}</p>
 <script>
     function initMap() {
+        {% for ins in qs %}
+
         var IconImage = new google.maps.MarkerImage(
                 '{{ ins.photo.url }}',
                 null,
@@ -29,13 +29,14 @@
             map: map_{{ ins.id }},
             icon: IconImage,
             });
+        {% endfor %}
     }
 </script>
-
+{% for ins in qs %}
+    <img src="{{ ins.photo.url }}" width='100'>
+    <p>GPS : {{ ins.lng }}, {{ ins.lat }}</p>
 <div id='map_{{ ins.id }}'></div>
-
 <hr>
-
 {% endfor %}
 
 {% endblock %}
