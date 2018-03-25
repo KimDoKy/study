@@ -12,7 +12,7 @@
         <td>{{ album.user }}</td>
         <td>
             {% for photo in album.photo_set.all %}
-                {{ photo.title }}<br>
+                {{ photo.id }}.{{ photo.title }}<br>
             {% endfor %}
         </td>
     </tr>
