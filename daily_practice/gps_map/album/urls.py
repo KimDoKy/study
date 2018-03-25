@@ -5,4 +5,5 @@ app_name = 'album'
 
 urlpatterns = [
     path('', views.AlbumView, name='album_list'),
+    path('<pk>/', views.PhotoView, name='photo_list'),
     ]

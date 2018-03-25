@@ -1,0 +1,22 @@
+<h2>{{ album.title }}<small> by {{ album.user }}</small></h2>
+<hr>
+<table>
+    <tr>
+        <th>No.</th>
+        <th>title</th>
+        <th>photo</th>
+        <th>GPS<th>
+        <th>Map</th>
+        <th>create_at</th>
+    </tr>
+    {% for photo in album.photo_set.all %}
+    <tr>
+        <td>{{ photo.id }}</td>
+        <td>{{ photo.title }}</td>
+        <td><img src='{{ photo.photo.url }}' width=100px height=100px></td>
+        <td>lat = {{ photo.lat }}<br>lng = {{ photo.lng }}</td>
+        <td>Map</td>
+        <td>at {{ photo.create_at }}</td>
+    </tr>
+    {% endfor %}
+</table>
