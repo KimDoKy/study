@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Photo, Album
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from util.gps import get_gps
 from django.conf import settings
 
@@ -20,3 +20,5 @@ class PhotoDetailView(DetailView):
         return context
 
 PhotoView = PhotoDetailView.as_view()
+
+UpdateView = CreateView.as_view(model=Photo, fields='__all__')
