@@ -15,7 +15,7 @@ class Photo(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('album:photo_detail', args=[self.album_id])
+        return reverse('album:album_detail', args=[self.album_id])
 
 class Album(models.Model):
     title = models.CharField(max_length=50)

@@ -1,0 +1,12 @@
+<h2>Delete Photo</h2>
+<p>{{ photo.titile }}</p>
+<hr>
+Delete Photo?<br>
+<img src="{{ photo.photo.url }}" width=150px height=150px>
+<form method='post'>
+    {% csrf_token %}
+    <input type='submit' value='delete'>
+    <a href='{% url "album:album_detail" id %}'>
+        <input type='button' value='return album'>
+    </a>
+</form>

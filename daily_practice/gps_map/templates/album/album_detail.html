@@ -49,7 +49,11 @@
     {% for photo in album.photo_set.all %}
     <tr>
         <td>{{ photo.id }}</td>
-        <td>{{ photo.title }}</td>
+        <td>
+            <a href="{% url 'album:photo' photo.id %}">
+                {{ photo.title }}
+            </a>
+        </td>
         <td><img src='{{ photo.photo.url }}' width=100px height=100px></td>
         <td>lat = {{ photo.lat }}<br>lng = {{ photo.lng }}</td>
         <td>
@@ -58,3 +62,10 @@
     </tr>
     {% endfor %}
 </table>
+<hr>
+<a href="{% url 'album:album_list' %}">
+    <button>return lisrt</button>
+</a>
+<a href="{% url 'album:new_photo' %}">
+    <button>add Photo</button>
+</a>
