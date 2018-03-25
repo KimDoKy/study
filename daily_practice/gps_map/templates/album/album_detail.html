@@ -1,3 +1,18 @@
+<head>
+{% block title %}album Detail{% endblock %}
+<style>
+    {% for style in album.photo_set.all %} 
+    #map_{{ style.id }} {
+        width: 250px;
+        height: 250px;
+    }
+    {% endfor %}
+</style>
+</head>
+
+<body>
+<script async defer src='https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap'>
+</script>
 <h2>{{ album.title }}<small> by {{ album.user }}</small></h2>
 <hr>
 <table>
@@ -9,13 +24,36 @@
         <th>Map</th>
         <th>create_at</th>
     </tr>
+    <script>
+        function initMap() {
+           {% for map in album.photo_set.all %}
+            var IconImage = new google.maps.MarkerImage(
+                    "{{ map.photo.url }}",
+                    null,
+                    null,
+                    null,
+                    new google.maps.Size(50, 50));
+            var GPS_{{ map.id }} = {lat: {{ map.lat }}, lng: {{ map.lng }}};
+            var map_{{ map.id }} = new google.maps.Map(document.getElementById('map_{{ map.id }}'),{
+                    zoom: 18,
+                    center: GPS_{{ map.id }}
+                });
+            var marker = new google.maps.Marker({
+                    position: GPS_{{ map.id }},
+                    map: map_{{ map.id }},
+                    icon: IconImage,
+                    });
+            {% endfor %}
+        }
+     </script>
     {% for photo in album.photo_set.all %}
     <tr>
         <td>{{ photo.id }}</td>
         <td>{{ photo.title }}</td>
         <td><img src='{{ photo.photo.url }}' width=100px height=100px></td>
         <td>lat = {{ photo.lat }}<br>lng = {{ photo.lng }}</td>
-        <td>Map</td>
+        <td>
+            <div id='map_{{ photo.id }}'></td>
         <td>at {{ photo.create_at }}</td>
     </tr>
     {% endfor %}
