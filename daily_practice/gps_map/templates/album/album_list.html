@@ -1,0 +1,21 @@
+<table>
+    <tr>
+        <th>No.</th>
+        <th>Title</th>
+        <th>Owner</th>
+        <th>Photo List</th>
+    </tr>
+    {% for album in album_list %}
+    <tr>
+        <td>{{ album.id }}</td>
+        <td>{{ album.title }}</td>
+        <td>{{ album.user }}</td>
+        <td>
+            {% for photo in album.photo_set.all %}
+                {{ photo.title }}<br>
+            {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
