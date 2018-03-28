@@ -1,5 +1,0 @@
-db_server:
-- 192.168.10.7
-web_server: !!set
-  192.168.0.2: null
-  192.168.0.3: null
