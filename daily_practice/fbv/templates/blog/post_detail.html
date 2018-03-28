@@ -2,6 +2,9 @@
 <small>by {{ post.author }} at {{ post.create_at }}</small>
 <hr>
 <p>{{ post.content|linebreaks }}</p>
+{% if post.photo %}
+    <img src="{{ post.photo.url }}" width=200px, height=auto>
+{% endif %}
 <hr>
 <a href="{% url 'blog:post_list' %}">
     <button>return list</button>
