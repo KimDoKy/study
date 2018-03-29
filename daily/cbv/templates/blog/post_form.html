@@ -1,3 +1,9 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
 <form method='post' enctype='multipart/form-data'>
     {% csrf_token %}
     <table>{{ form.as_table }}</table>
@@ -6,3 +12,7 @@
         <input type='button' value='return list'>
     </a>
 </form>
+
+{% endif %}
+
+{% endblock %}

@@ -1,3 +1,8 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
 <table>
     <tr>
         <th>No.</th>
@@ -22,3 +27,6 @@
 <a href="{% url 'blog:post_new' %}">
     <button>write</button>
 </a>
+{% endif %}
+
+{% endblock %}
