@@ -5,3 +5,6 @@
     <img src='{{ post.photo.url }}'>
 {% endif %}
 <hr>
+<a href="{% url 'blog:post_list' %}">
+    <button>return list</button>
+</a>
