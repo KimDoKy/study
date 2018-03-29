@@ -1,0 +1,7 @@
+<h2>{{ post.title }}</h2>
+<hr>
+<p>{{ post.content|linebreaks }}</p>
+{% if post.photo %}
+    <img src='{{ post.photo.url }}'>
+{% endif %}
+<hr>
