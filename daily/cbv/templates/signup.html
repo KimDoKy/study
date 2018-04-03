@@ -1,8 +1,0 @@
-<form method='post'>
-    {% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    <input type='submit' value='signup'>
-    <a href="{% url 'login' %}">
-        <input type='button' value='return'>
-    </a>
-</form>
