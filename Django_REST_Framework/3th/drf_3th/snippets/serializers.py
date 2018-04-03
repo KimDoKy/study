@@ -11,8 +11,9 @@ class SnippetSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'code', 'linenos', 'language', 'style', 'owner', 'highlight')
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    snippets = serializers.HyperlinkedRelatedField(many=True, view_name='snippet-detail', read_only=True)
+class UserSerializer(serializers.ModelSerializer):
+    snippet = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippet.objects.all())
+    
     class Meta:
         model = User
         fields = ('id', 'username', 'snippets')
