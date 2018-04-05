@@ -3,7 +3,7 @@
 <hr>
 <p>{{ post.content|linebreaks }}</p>
 {% if post.photo %}
-    <img src='{{ post.photo.url }}'>
+    <img src='{{ post.photo.url }}' width=200px height='auto'>
 {% endif %}
 <hr>
 <a href='{% url "blog:post_list" %}'>
