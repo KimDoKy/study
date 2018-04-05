@@ -1,0 +1,12 @@
+<h2>{{ post.title }}</h2>
+<hr>
+<p>Delete Post?</p>
+<hr>
+
+<form method='post'>
+    {% csrf_token %}
+    <a href='{% url "blog:post_detail" post.id %}'>
+        <input type='button' value='return post'>
+    </a>
+    <input type='submit' value='delete'>
+</form>
