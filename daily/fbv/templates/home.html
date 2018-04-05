@@ -1,3 +1,6 @@
+{% block title %}Home{% endblock %}
+<br>
+
 {% if user.is_authenticated %}
     <p>{{ user.username }}
         <a href="{% url 'logout' %}">
@@ -13,3 +16,6 @@
         <button>Signup</button>
     </a>
 {% endif %}
+
+{% block content %}
+{% endblock %}
