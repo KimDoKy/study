@@ -1,14 +1,8 @@
-{% if user.is_authenticated %}
-    <p>{{ user.username }}</p>
-    <a href='{% url "logout" %}'>
-        <button>Logout</button>
+<form method='post'>
+    {% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <input type='submit' value='login'>
+    <a href="{% url 'home' %}">
+        <button>return</button>
     </a>
-{% else %}
-    <p>Login first</p>
-    <a href="{% url 'login' %}">
-        <button>Login</button>
-    </a>
-    <a href="{% url 'signup' %}">
-        <button>Signup</button>
-    </a>
-{% endif %}
+</form>
