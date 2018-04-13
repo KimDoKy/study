@@ -1,8 +1,0 @@
-<form method='post' enctype='multipart/form-data'>
-    {% csrf_token %}
-    <table>{{ forms.as_table }}</table>
-    <input type='submit' value='save'>
-    <a href="{% url 'blog:post_list' %}">
-        <input type='button' value='return list'>
-    </a>
-</form>
