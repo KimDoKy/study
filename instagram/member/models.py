@@ -70,7 +70,7 @@ class MyUser(models.Model):
     def assign_global_variables():
         import sys
         module = sys.modules['__main__']
-        users = MyUser.objrcts.filter(username_startswith='User')
+        users = MyUser.objects.filter(username__startswith='User')
         for index, user in enumerate(users):
             setattr(module, 'u{}'.format(index+1), user)
 
