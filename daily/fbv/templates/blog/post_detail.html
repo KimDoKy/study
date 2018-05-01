@@ -1,0 +1,28 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<h2>{{ post.title }}</h2>
+<small>{{ post.author }} at {{ post.created }}</small>
+<hr>
+<p>{{ post.content|linebreaks }}</p>
+{% if post.photo %}
+    <img src="{{ post.photo.url }}" width=300px>
+{% endif %}
+<hr>
+<a href="{% url 'blog:post_list' %}">
+    <button>to list</button>
+</a>
+<a href="{% url 'blog:post_new' %}">
+    <button>write post</button>
+</a>
+<a href="{% url 'blog:post_edit' post.id %}">
+    <button>modify post</button>
+</a>
+<a href="{% url 'blog:post_del' post.id %}">
+    <button>delete post</button>
+</a>
+{% endif %}
+
+{% endblock %}

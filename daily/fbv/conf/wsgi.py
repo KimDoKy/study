@@ -1,5 +1,5 @@
 """
-WSGI config for func_v project.
+WSGI config for fbv project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
