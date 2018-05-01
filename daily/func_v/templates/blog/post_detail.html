@@ -1,0 +1,17 @@
+<h2>{{ post.title }}</h2>
+<small>author : {{ post.author }}, create_at : {{ post.created }}</small>
+<hr>
+<li>{{ post.content|linebreaks }}</li>
+{% if post.photo %}
+<img src="{{ post.photo.url }}" width='300px'>
+{% endif %}
+<hr>
+<a href="{% url 'blog:post_list' %}">
+    <button>return list</button>
+</a>
+<a href="{% url 'blog:post_edit' post.id %}">
+    <button>modify</button>
+</a>
+<a href="{% url 'blog:post_del' post.id %}">
+    <button>delete</button>
+</a>
