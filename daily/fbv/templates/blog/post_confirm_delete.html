@@ -1,3 +1,8 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
 <h2>{{ post.title }}</h2>
 <hr>
 <p>Delete Post?</p>
@@ -9,3 +14,6 @@
         <input type='button' value='cancle'>
     </a>
 </form>
+{% endif %}
+
+{% endblock %}

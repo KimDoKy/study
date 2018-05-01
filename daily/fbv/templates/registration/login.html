@@ -2,7 +2,7 @@
     {% csrf_token %}
     <table>{{ form.as_table }}</table>
     <input type='submit' value='login'>
-    <a href="{{ request.META.HTTP_REFERER }}">
-        <button>return page</button>
+    <a href='{{ request.META.HTTP_REFERER }}'>
+        <input type='button' value='return page'>
     </a>
 </form>
