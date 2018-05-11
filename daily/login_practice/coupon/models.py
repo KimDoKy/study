@@ -7,6 +7,7 @@ class Coupon(models.Model):
     name = models.CharField(max_length=7)
     use_date = models.DateTimeField(auto_now=True, blank=True)
     use_date_2nd = models.DateTimeField(auto_now=True, blank=True)
+    image = models.ImageField()
 
     def __str__(self):
         return self.name
