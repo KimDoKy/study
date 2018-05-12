@@ -1,9 +1,7 @@
-<style>
-    table, th, td {
-border: 1px solid black;
-    }
-</style>
-<h2>Now is {% now "Y년 m월 d일 h:i" %}</h2>
+{% extends 'home.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
 <table>
     <tr>
         <th>No.</th>
@@ -40,3 +38,5 @@ border: 1px solid black;
     {% csrf_token %}
     <input type='submit' value='reset' name='reset'>
 </form>
+{% endif %}
+{% endblock %}
