@@ -1,0 +1,14 @@
+{% if user.is_authenticated %}
+Welcome {{ user.username }}
+<a href="{% url 'logout' %}">
+    <button>Logout</button>
+</a>
+{% else %}
+Login First.
+<a href="{% url 'login' %}">
+    <button>Login</button>
+</a>
+<a href="{% url 'signup' %}">
+    <button>Signup</button>
+</a>
+{% endif %}
