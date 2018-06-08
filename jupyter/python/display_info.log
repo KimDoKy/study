@@ -1,0 +1,6 @@
+INFO:root:[2018-06-08 21:50] 실행결과 args - ('John', 25), kwargs - {}
+INFO:root:[2018-06-08 21:57] 실행결과 args - ('John', 25), kwargs - {}
+INFO:root:[2018-06-08 21:58] 실행결과 args - ('John', 25), kwargs - {}
+INFO:root:[2018-06-08 22:01] 실행결과 args - ('John', 25), kwargs - {}
+INFO:root:[2018-06-08 22:07] 실행결과 args - ('John', 25), kwargs - {}
+INFO:root:[2018-06-08 22:17] 실행결과 args - ('John', 30), kwargs - {}
