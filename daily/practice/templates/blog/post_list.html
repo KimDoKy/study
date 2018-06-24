@@ -1,0 +1,20 @@
+<table>
+ <tr>
+  <th>No.</th>
+  <th>title</th>
+  <th>author</th>
+  <th>create_at</th>
+ </tr>
+ {% for list in qs %}
+ <tr>
+  <td>{{ list.id }}</td>
+  <td><a href="{% url 'blog:post_detail' list.id %}">{{ list.title }}</a></td>
+  <td>{{ list.author }}</td>
+  <td>{{ list.create_at }}</td>
+ </tr>
+ {% endfor %}
+</table>
+<hr>
+<a href="{% url 'blog:post_new' %}">
+    <button>add post</button>
+</a>
