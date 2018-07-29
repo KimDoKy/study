@@ -7,14 +7,15 @@ local_hostname = socket.gethostname()
 
 local_fqdn = socket.getfqdn()
 
-ip_address = socket.gethostbyname(local_hostname)
+# ip_address = socket.gethostbyname(local_hostname)
+ip_address = socket.gethostbyname('localhost')
 
 server_address = (ip_address, 23456)
 host = ''
 port = 56789
 addr = (host, port)
-sock.connect(addr)
-#sock.connect(server_address)
+#sock.connect(addr)
+sock.connect(server_address)
 print('connecting to %s (%s) with %s' % (local_hostname, local_fqdn, ip_address))
 
 temperature_data = ['15', '22', '21', '26', '25', '19']
