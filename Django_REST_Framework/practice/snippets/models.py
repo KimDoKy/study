@@ -17,9 +17,9 @@ class Snippet(models.Model):
     linenos = models.BooleanField(default=False)
     language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100)
     style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)
-    owner = models.ForeignKey('auth.User', related_name='snippets', on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.user', related_name='snippets', on_delete=models.CASCADE)
     highlighted = models.TextField()
-        
+
     class Meta:
         ordering = ('created',)
 
@@ -27,7 +27,7 @@ class Snippet(models.Model):
         lexer = get_lexer_by_name(self.language)
         linenos = self.linenos and 'table' or False
         options = self.title and {'title': self.title} or {}
-        formatter = HtmlFormatter(style=self.style, lineno=linenos,
+        formatter = HtmlFormatter(style=self.style, linenos=linenos,
                                   full=True, **options)
         self.highlighted = highlight(self.code, lexer, formatter)
         super(Snippet, self).save(*args, **kwargs)
