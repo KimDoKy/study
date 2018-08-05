@@ -11,6 +11,9 @@
 <a href="{% url 'blog:post_new' %}">
     <button>write</button>
 </a>
-<a href="{% url 'blog:post_update' post.id%}">
+<a href="{% url 'blog:post_update' post.id %}">
     <button>modify</button>
+</a>
+<a href="{% url 'blog:post_del' post.id %}">
+    <button>delete</button>
 </a>
