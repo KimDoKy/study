@@ -1,0 +1,11 @@
+<h2>{{ qs.title }}</h2>
+<hr>
+Delete Post?
+<hr>
+<form method='post'>
+    {% csrf_token %}
+    <a href="{{ request.META.HTTP_REFERER }}">
+        <input type='button' value='return post'>
+    </a>
+    <input type='submit' value='delete post'>
+</form>

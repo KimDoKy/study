@@ -1,0 +1,42 @@
+{% extends 'home.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<table>
+    <tr>
+        <th>No.</th>
+        <th>coupon_name</th>
+        <th>use</th>
+        <th>status_1</th>
+        <th>use_date</th>
+        <th>use_2</th>
+        <th>status_2</th>
+        <th>use_2_data</th>
+     </tr>
+     {% for list in lists %}
+     <tr>
+         <form method='post'>
+         {% csrf_token %}
+         <td>{{ list.id }}</td>
+         <td>{{ list.name }}</td>
+         <td>
+             <input type='submit' name='use_1' value='{{ list.id }},{{ list.use_1 }}'>
+         </td>
+         <td>{{ list.use_1 }}</td>
+         <td>{{ list.use_date|date:"Y/m/d G:i" }}</td>
+         <td>
+             <input type='submit' name='use_2' value='{{ list.id }},{{ list.use_2 }}'>
+         </td>
+         <td>{{ list.use_2 }}</td>
+         <td>{{ list.use_2_date|date:"Y/m/d G:i" }}</td>
+         </form>
+     </tr>
+    {% endfor %}
+</table>
+
+<form method='post'>
+    {% csrf_token %}
+    <input type='submit' value='reset' name='reset'>
+</form>
+{% endif %}
+{% endblock %}

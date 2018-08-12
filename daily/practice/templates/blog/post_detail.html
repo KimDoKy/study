@@ -1,0 +1,15 @@
+<h2>{{ qs.title }}</h2>
+<hr>
+<p>{{ qs.content }}</p>
+{% if qs.photo %}
+<img src="{{ qs.photo.url }}">
+{% endif %}
+<hr>
+<a href="{% url 'blog:post_list' %}">
+     <button>return list</button></a>
+<a href="{% url 'blog:post_edit' qs.id %}">
+    <button>modify</button>
+</a>
+<a href="{% url 'blog:post_del' qs.id %}">
+    <button>delete</button>
+</a>
