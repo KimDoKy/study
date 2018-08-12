@@ -2,6 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from .forms import PostForm
 
+from django.contrib.auth.models import User
+from rest_framework import viewsets
+from blog.serializers import PostSerializer, UserSerializer
+
 def post_list(request):
     qs = Post.objects.all()
     q = request.GET.get('q')
@@ -40,3 +44,11 @@ def post_del(request, pk):
         qs.delete()
         return redirect('blog:post_list')
     return render(request, 'blog/post_confirm.html', {'qs':qs})
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
