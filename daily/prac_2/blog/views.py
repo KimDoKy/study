@@ -11,3 +11,7 @@ class PostViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+def post_list(request):
+    q = Post.objects.all()
+    return render(request, 'blog/post_list.html', {'posts':q})
