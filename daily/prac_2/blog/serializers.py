@@ -5,7 +5,7 @@ from blog.models import Post
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
-        fields = ('title', 'content', 'photo', 'author_id')
+        fields = ('title', 'content', 'photo', 'author')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     author =  serializers.StringRelatedField(many=True)
