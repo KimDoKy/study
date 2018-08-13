@@ -13,8 +13,11 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
 
 def post_list(request):
-    q = Post.objects.all()
-    return render(request, 'blog/post_list.html', {'posts':q})
+    qs = Post.objects.all()
+    q = request.GET.get('q')
+    if q:
+        qs = qs.filter(title__icontains=q)
+    return render(request, 'blog/post_list.html', {'posts':qs})
 
 def post_detail(request, pk):
     q = get_object_or_404(Post, pk=pk)
