@@ -1,0 +1,26 @@
+class Computer:
+    def __init__(self, cpu, ram):
+        self.CPU = cpu
+        self.RAM = ram
+
+    def browser(self):
+        print('browser')
+
+    def work(self):
+        print('work')
+
+class Laptop(Computer):
+    # 멤버 추가
+    def __init__(self, cpu, ram, battery):
+        super().__init__(cpu, ran)
+        self.battery = battery
+
+    # 메서드 추가
+    def move(self, to):
+        print('move to {}'.format(to))
+
+if __name__ == '__main__':
+    lap = Laptop('inter', 16, 'powerful')
+    lap.browser()
+    lap.work()
+    lap.move('office')
