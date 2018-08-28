@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.staticfiles.testing import LiveServerTestCase
 
 
 class HomeNewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
-        chromdriver = '../../../../driver/chromdriver'
+        chromedriver = '../../../../driver/chromedriver'
         self.browser = webdriver.Chrome(chromedriver)
         self.browser.implicitly_wait(3)
 
