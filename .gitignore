@@ -11,3 +11,5 @@ __pycache__/
 *.png
 .secret/
 db.sqlite3
+.coverage
+htmlcov
