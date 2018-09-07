@@ -2,6 +2,8 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 from . import managers
 
@@ -29,3 +31,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_profile_for_new_user(sender, created, instance, **kwargs):
+    if created:
+        profile = Profile(user=instance)
+        profile.save()
