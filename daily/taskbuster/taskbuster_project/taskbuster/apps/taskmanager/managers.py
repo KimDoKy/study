@@ -8,3 +8,7 @@ class ProfileManager(models.Manager):
 
 class ProjectManager(models.Manager):
     pass
+
+
+class TagManager(models.Manager):
+    pass
