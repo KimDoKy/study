@@ -42,7 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'taskbuster.apps.taskmanager',
 ]
+
+SITE_ID = 7
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -106,6 +114,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# AllAuth set
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+        'allauth.account.auth_backends.AuthenticationBackend',
+        )
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -138,3 +152,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
         )
+
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_QUERY_EMAIL = True
+LOGIN_REDIRECT_URL = '/'
