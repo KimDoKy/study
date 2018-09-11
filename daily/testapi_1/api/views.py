@@ -1,11 +1,32 @@
-from rest_framework import generics
-from .serializers import BucketlistSerializer
+from rest_framework import generics, permissions
+from django.contrib.auth.models import User
+from .permissions import IsOwner
+from .serializers import BucketlistSerializer, UserSerializer
 from .models import Bucketlist
 
 
 class CreateView(generics.ListCreateAPIView):
     queryset = Bucketlist.objects.all()
     serializer_class = BucketlistSerializer
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
 
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(owner=self.request.user)
+
+
+class DetailsView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Bucketlist.objects.all()
+    serializer_class = BucketlistSerializer
+    permission_classes = (
+            permissions.IsAuthenticated,
+            IsOwner)
+
+
+class UserView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetailsView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

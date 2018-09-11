@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.IsAuthenticated',
+            ),
+    'DEFAULT_AUTHENTICATION_CLASSESE': (
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.TokenAuthentication',
+            )
+}
 ROOT_URLCONF = 'testapi_1.urls'
 
 TEMPLATES = [
