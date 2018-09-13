@@ -8,7 +8,7 @@ class CreateView(generics.ListCreateAPIView):
     serializer_class = BucketSerializer
 
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(owner=self.request.user)
 
 
 class DetailsView(generics.RetrieveUpdateDestroyAPIView):
