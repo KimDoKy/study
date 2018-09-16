@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .serializers import BucketSerializer
+from .models import Bucket
 
-# Create your views here.
+
+class CreateView(generics.ListCreateAPIView):
+    queryset = Bucket.objects.all()
+    serializer_class = BucketSerializer
