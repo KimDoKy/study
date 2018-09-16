@@ -4,7 +4,7 @@ from .views import CreateView, DetailsView
 
 urlpatterns = [
     path('bucketlists/', CreateView.as_view(), name='create'),
-    path('bucketlist/<pk>/', DetailsView.as_view(), name='detail'),
+    path('bucketlists/<pk>/', DetailsView.as_view(), name='detail'),
     ]
 
 urlpatterns += format_suffix_patterns(urlpatterns)
