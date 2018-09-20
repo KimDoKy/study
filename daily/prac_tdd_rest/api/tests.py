@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APIClient
 from .models import Bucket
@@ -8,8 +9,9 @@ from .models import Bucket
 class ModelTestCase(TestCase):
 
     def setUp(self):
+        user = User.objects.create(username='model_tester')
         self.name = 'Write code'
-        self.bucket = Bucket(name=self.name)
+        self.bucket = Bucket(name=self.name, owner=user)
 
     def test_model_can_create_a_bucket(self):
         old_count = Bucket.objects.count()
@@ -21,8 +23,10 @@ class ModelTestCase(TestCase):
 class ViewTestCase(TestCase):
 
     def setUp(self):
+        user = User.objects.create(username='View_tester')
         self.client = APIClient()
-        self.bucket_data = {'name':'view test code'}
+        self.client.force_authenticate(user=user)
+        self.bucket_data = {'name':'view test code', 'owner':user.id}
         self.response = self.client.post(
                 reverse('create'),
                 self.bucket_data,
