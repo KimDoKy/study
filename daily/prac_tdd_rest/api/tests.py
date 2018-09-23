@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APIClient
 from .models import Post
@@ -8,8 +9,9 @@ from .models import Post
 class ModelTestCase(TestCase):
 
     def setUp(self):
+        user = User.objects.create(username='tester')
         self.title = 'post test'
-        self.post = Post(title=self.title)
+        self.post = Post(title=self.title, author=user)
 
     def test_model_can_create_a_post(self):
         old_count = Post.objects.count()
@@ -21,8 +23,10 @@ class ModelTestCase(TestCase):
 class ViewTestCase(TestCase):
 
     def setUp(self):
+        user = User.objects.create(username='View_tester')
         self.client = APIClient()
-        self.post_data = {'title':'view test title'}
+        self.client.force_authenticate(user=user)
+        self.post_data = {'title':'view test title', 'author':user.id}
         self.response = self.client.post(
                 reverse('create'),
                 self.post_data,
