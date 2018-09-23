@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 from rest_framework import status
 from .models import Todo
@@ -8,8 +9,9 @@ from .models import Todo
 class ModelTestCase(TestCase):
 
     def setUp(self):
+        user = User.objects.create(username='tester')
         self.title = 'write test code'
-        self.todo = Todo(title=self.title)
+        self.todo = Todo(title=self.title, owner=user)
 
     def test_model_can_create_a_todo(self):
         old_count = Todo.objects.count()
@@ -21,8 +23,10 @@ class ModelTestCase(TestCase):
 class ViewTestCase(TestCase):
 
     def setUp(self):
+        user = User.objects.create(username='view_tester')
         self.client = APIClient()
-        self.todo_data = {'title':'view test'}
+        self.client.force_authenticate(user=user)
+        self.todo_data = {'title':'view test', 'owner':user.id}
         self.response = self.client.post(
                 reverse('create'),
                 self.todo_data,
