@@ -1,0 +1,8 @@
+<h1>{{ post.title }}</h1>
+<div style='text-align:right'>{{ post.author }} | {{ post.created }}</div>
+<hr>
+<p>{{ post.content }}</p>
+<hr>
+<a href="{% url 'post_list' %}">
+    <button>return to list</button>
+</a>
