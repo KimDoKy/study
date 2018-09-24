@@ -14,3 +14,7 @@ class CreateView(generics.ListCreateAPIView):
 class DetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+def post_list(request):
+    post = Post.objects.all()
+    return render(request, 'blog/post_list.html', {'posts':post})
