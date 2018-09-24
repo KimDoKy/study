@@ -16,9 +16,12 @@ class DetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
 
 def post_list(request):
-    post = Post.objects.all()
-    return render(request, 'blog/post_list.html', {'posts':post})
+    qs = Post.objects.all()
+    q = request.GET.get('q')
+    if q:
+        qs = qs.filter(title__icontains=q)
+    return render(request, 'blog/post_list.html', {'posts':qs})
 
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post':post})
+    qs = get_object_or_404(Post, pk=pk)
+    return render(request, 'blog/post_detail.html', {'post':qs})
