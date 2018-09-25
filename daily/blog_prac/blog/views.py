@@ -1,13 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from rest_framework import generics
+from rest_framework import generics, permissions
 from .models import Post
 from .serializers import PostSerializer
 from .forms import PostForm
+from .permissions import IsAuthor
 
 
 class CreateView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = (permissions.IsAuthenticated, IsAuthor)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -15,6 +17,7 @@ class CreateView(generics.ListCreateAPIView):
 class DetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = (permissions.IsAuthenticated, IsAuthor)
 
 def post_list(request):
     qs = Post.objects.all()
