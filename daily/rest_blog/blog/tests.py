@@ -36,3 +36,11 @@ class BlogTestCase(TestCase):
         form = PostForm(data=create_data)
         self.assertTrue(form.is_valid())
 
+    def test_blog_can_put_post_edit(self):
+        user = User.objects.get()
+        post = Post.objects.get()
+        update_data = {'title':'update title', 'author':user.id}
+        response = self.client.put(
+                reverse('post_edit', kwargs={'pk':post.id}),
+                update_data)
+        self.assertFormError(response, PostForm, update_data, 'this field is required.')
