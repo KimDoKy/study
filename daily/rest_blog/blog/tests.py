@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 from rest_framework import status
 from .models import Post
+from .forms import PostForm
 
 class BlogTestCase(TestCase):
 
@@ -28,3 +29,10 @@ class BlogTestCase(TestCase):
                 reverse('post_detail', kwargs={'pk':post.id}),
                 format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_blog_can_post_post_new(self):
+        user = User.objects.get()
+        create_data = {'title':'create title', 'author':user.id}
+        form = PostForm(data=create_data)
+        self.assertTrue(form.is_valid())
+
