@@ -6,4 +6,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('get-token/', obtain_auth_token),
+    path('blog/', include('blog.urls')),
 ]
