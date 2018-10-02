@@ -4,4 +4,7 @@
 </div>
 <hr>
 <p>{{ post.content }}</p>
+{% if post.photo %}
+<img src="{{ post.photo.url }}" width=200px<
+{% endif %}
 <hr>
