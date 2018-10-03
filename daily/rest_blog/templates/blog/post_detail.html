@@ -8,3 +8,7 @@
 <img src="{{ post.photo.url }}" width=200px<
 {% endif %}
 <hr>
+
+<a href="{% url 'post_edit' post.id %}">
+    <button>modify</button>
+</a>
