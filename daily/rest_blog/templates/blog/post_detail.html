@@ -8,10 +8,20 @@
 <img src="{{ post.photo.url }}" width=200px<
 {% endif %}
 <hr>
-<ul>Tags
-{% for comment in post.tag_set.all %}
-<li>{{ comment.name }}</li>
+<ul>Tags | 
+{% for tag in post.tag_set.all %}
+#{{ tag.name }},
 {% endfor %}
+</ul>
+<hr/>
+<ul>
+		<p>Comment</p>
+  {% for comment in post.comment_set.all %}
+		  <li>{{ comment.content }}
+		  by {{ comment.author }}
+		  at {{ comment.created }}</li>
+  {% endfor %}
+
 </ul>
 <a href="{% url 'post_edit' post.id %}">
     <button>modify</button>
