@@ -10,6 +10,7 @@ class Post(models.Model):
     photo = models.ImageField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    tag_set = models.ManyToManyField('Tag')
 
     def __str__(self):
         return f'{self.title}'
@@ -17,3 +18,10 @@ class Post(models.Model):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.name
