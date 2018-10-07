@@ -10,7 +10,7 @@
   {% for post in posts %}
   <tr>
     <td>{{ post.id }}</td>
-    <td><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></td>
+    <td><a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a></td>
     <td>{{ post.author }}</td>
     <td>{{ post.created }}</td>
   </tr>
@@ -21,3 +21,6 @@
   <input type='text' name='q'>
   <input type='submit' value='search'>
 </form>
+<a href="{% url 'blog:post_new' %}">
+  <button>write post</button>
+</a>
