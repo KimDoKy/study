@@ -34,3 +34,10 @@ class ViewTestCase(TestCase):
 
     def test_api_can_create_a_post(self):
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_a_post(self):
+        post = Post.objects.get()
+        response = self.client.get(
+            '/api/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, post)
