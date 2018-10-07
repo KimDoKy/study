@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework.authtoken.models import Token
 
 class Post(models.Model):
     title = models.CharField(max_length=20)
@@ -10,3 +11,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def create_auth_token(sender, instance=None, created=False, **kwargs):
+        if created:
+            Token.objects.create(author=instance.user)
