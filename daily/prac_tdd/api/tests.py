@@ -41,3 +41,12 @@ class ViewTestCase(TestCase):
             '/api/', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, post)
+
+    def test_api_can_update_a_post(self):
+        user = User.objects.get()
+        post = Post.objects.get()
+        update_data = {'title':'update title', 'author':user.id}
+        res = self.client.put(
+            reverse('detail', kwargs={'pk':post.id}),
+            update_data, format='json')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
