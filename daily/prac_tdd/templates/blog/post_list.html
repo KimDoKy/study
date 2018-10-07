@@ -1,0 +1,19 @@
+<h1>Post List</h1>
+<hr/>
+<table>
+  <tr>
+    <th>No.</th>
+    <th>title</th>
+    <th>author</th>
+    <th>created</th>
+  </tr>
+  {% for post in posts %}
+  <tr>
+    <td>{{ post.id }}</td>
+    <td>{{ post.title }}</td>
+    <td>{{ post.author }}</td>
+    <td>{{ post.created }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<hr/>
