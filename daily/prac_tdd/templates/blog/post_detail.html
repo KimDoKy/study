@@ -1,0 +1,12 @@
+<h1>{{ post.title }}</h1>
+<p>at {{ post.created }} to {{ post.author }}</p>
+<hr/>
+<p>{{ post.content }}<p>
+{% if post.photo %}
+<img src="{{ post.photo.url }}">
+{% endif %}
+<hr/>
+
+<a href="{% url 'post_list' %}">
+  <button>post list</button>
+</a>
