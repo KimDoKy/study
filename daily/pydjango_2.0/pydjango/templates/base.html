@@ -21,9 +21,9 @@
 </div>
 
 <div id='menu'>
-  <li><a href='#'>Home</li>
-  <li><a href='#'>Bookmark</li>
-  <li><a href='#'>Blog</li>
+  <li><a href='{% url "home" %}'>Home</li>
+  <li><a href='{% url "bookmark:index" %}'>Bookmark</li>
+  <li><a href='{% url "blog:index" %}'>Blog</li>
   <li><a href='#'>Photo</li>
 
   <li><a href='#'>Add&bigtriangledown;</a>
@@ -41,9 +41,9 @@
     </ul>
   </li>
 
-  <li><a href='#'>Archive</a></li>
+  <li><a href='{% url "blog:post_archive" %}'>Archive</a></li>
   <li><a href='#'>Search</a></li>
-  <li><a href='#'>Admin</a></li>
+  <li><a href='{% url "admin:index" %}'>Admin</a></li>
 </div>
 
 {% block content %}{% endblock %}
