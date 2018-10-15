@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
-#from django.views.generic import ListView, DetailView
 from bookmark.models import Bookmark
+from .views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', HomeView.as_view(), name='home'),
     path('bookmark/', include('bookmark.urls', namespace='bookmark')),
     path('blog/', include('blog.urls', namespace='blog')),
 
