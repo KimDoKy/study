@@ -7,7 +7,7 @@ class Post(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField(blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    photo = models.ImageField()
+    photo = models.ImageField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
