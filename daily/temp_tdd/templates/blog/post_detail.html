@@ -1,0 +1,11 @@
+<h2>{{ post.title }}</h2>
+<hr>
+{% if post.photo %}
+<img src='{{ post.photo.url }}' width=100px>
+{% endif %}
+<p>{{ post.content|linebreaks }}</p>
+
+<hr>
+<a href='{% url "post_list" %}'>
+  <button>return list</button>
+</a>
