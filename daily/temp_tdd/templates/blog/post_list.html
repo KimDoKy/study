@@ -1,0 +1,28 @@
+<h1>Post List</h1>
+<hr>
+
+<table>
+  <tr>
+    <th>No</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Create_at</th>
+  </tr>
+  {% for post in posts %}
+  <tr>
+    <td>{{ post.id }}</td>
+    <td><a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a></td>
+    <td>{{ post.author }}</td>
+    <td>{{ post.created }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<form method='get'>
+  <input type='text' name='q'>
+  <input type='submit' value='search'>
+</form>
+
+<hr>
+<a href='{% url "blog:post_new" %}'>
+  <button>write post</button></a>

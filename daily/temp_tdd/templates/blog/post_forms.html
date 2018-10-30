@@ -1,0 +1,10 @@
+<h2>Write Post</h2>
+<hr>
+<form method='post' encpyte='multipart/form-data'>
+  {% csrf_token %}
+  <table>{{ forms.as_table }}</table>
+  <input type='submit' value='save'>
+  <a href='{{ request.META.HTTP_REFERER }}'>
+    <input type='button' value='return'>
+  </a>
+</form>
