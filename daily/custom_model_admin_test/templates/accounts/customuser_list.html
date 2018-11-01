@@ -1,0 +1,15 @@
+<table>
+  <tr>
+    <th>No</th>
+	<th>이름</th>
+	<th>부서</th>
+	<th>직급</th>
+  </tr>
+{% for ob in object_list %}
+  <tr>
+	<td>{{ ob.id }}</td>
+	<td>{{ ob.username }}</td>
+	<td>{{ ob.get_level_display }}</td>
+	<td>{% for t in ob.level_set.all %}{{ t }}{% endfor %}</td>
+  </tr>
+{% endfor %}

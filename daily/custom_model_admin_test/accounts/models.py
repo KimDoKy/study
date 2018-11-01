@@ -13,19 +13,20 @@ class Team(models.Model):
 
 class CustomUser(AbstractUser):
     LEVER_CHOICE = (
-            ('ceo','대표이사'),
-            ('director','이사'),
-            ('manager','부장'),
-            ('deputy','차장'),
-            ('general','실장'),
-            ('main', '본부장'),
-            ('team',  '팀장'),
-            ('mana','과장'),
-            ('assi','주임'),
-            ('assi_mana','대리'),
+            ('lv1','대표이사'),
+            ('lv2','이사'),
+            ('lv3','부장'),
+            ('lv4','차장'),
+            ('lv5','실장'),
+            ('lv6', '본부장'),
+            ('lv7',  '팀장'),
+            ('lv8','과장'),
+            ('lv9','주임'),
+            ('lv10','대리'),
             )
     nick_name = models.CharField(max_length=10)
     level = models.CharField(max_length=20, choices=LEVER_CHOICE, blank=True)
     team_in = models.ManyToManyField('Team')
+
     def __str__(self):
         return self.username
