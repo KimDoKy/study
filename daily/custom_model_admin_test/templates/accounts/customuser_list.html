@@ -9,7 +9,7 @@
   <tr>
 	<td>{{ ob.id }}</td>
 	<td>{{ ob.username }}</td>
+    <td>{{ ob.team }}</td>
 	<td>{{ ob.get_level_display }}</td>
-	<td>{% for t in ob.level_set.all %}{{ t }}{% endfor %}</td>
   </tr>
 {% endfor %}

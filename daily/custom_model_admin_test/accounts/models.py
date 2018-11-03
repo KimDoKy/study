@@ -26,7 +26,7 @@ class CustomUser(AbstractUser):
             )
     nick_name = models.CharField(max_length=10)
     level = models.CharField(max_length=20, choices=LEVER_CHOICE, blank=True)
-    team_in = models.ManyToManyField('Team')
+    team = models.ForeignKey('Team', null=True, blank=True, on_delete=models.PROTECT, related_name='teamname')
 
     def __str__(self):
         return self.username
