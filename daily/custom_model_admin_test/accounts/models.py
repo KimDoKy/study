@@ -24,9 +24,9 @@ class CustomUser(AbstractUser):
             ('lv9','주임'),
             ('lv10','대리'),
             )
-    nick_name = models.CharField(max_length=10)
-    level = models.CharField(max_length=20, choices=LEVER_CHOICE, blank=True)
-    team = models.ForeignKey('Team', null=True, blank=True, on_delete=models.PROTECT, related_name='teamname')
+    nick_name = models.CharField(max_length=10, verbose_name='아이디')
+    level = models.CharField(max_length=20, choices=LEVER_CHOICE, blank=True, verbose_name='직급')
+    team = models.ForeignKey('Team', null=True, blank=True, on_delete=models.PROTECT, related_name='teamname', verbose_name='직급')
 
     def __str__(self):
         return self.username
