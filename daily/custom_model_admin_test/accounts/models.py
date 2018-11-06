@@ -2,8 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class Team(models.Model):
-    team_1 = models.CharField(max_length=50)
-    team_2 = models.ForeignKey('Team', on_delete=models.CASCADE, blank=True, null=True)
+    team_1 = models.CharField(max_length=50, verbose_name='부서')
+    team_2 = models.ForeignKey('Team', on_delete=models.CASCADE, blank=True, null=True, verbose_name='팀')
+
+    class Meta:
+        verbose_name_plural = '부서'
 
     def __str__(self):
         if self.team_2:
@@ -30,3 +33,6 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    class Meta:
+        verbose_name_plural = '사용자'
