@@ -1,0 +1,17 @@
+{% if user.is_authenticated %}
+{{ user.username }}
+<a href="{% url 'logout' %}">
+    <button>로그아웃</button>
+</a>
+{% else %}
+<h4>로그인하세요.</h4>
+<a href="{% url 'login' %}">
+    <button>로그인</button>
+</a>
+<a href="{% url 'signup' %}">
+    <button>가입하기</button>
+</a>
+{% endif %}
+
+{% block content %}
+{% endblock %}

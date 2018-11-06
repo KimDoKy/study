@@ -1,3 +1,7 @@
+{% extends 'home.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
 <table>
   <tr>
     <th>No</th>
@@ -13,3 +17,5 @@
 	<td>{{ ob.get_level_display }}</td>
   </tr>
 {% endfor %}
+{% endif %}
+{% endblock %}
