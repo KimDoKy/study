@@ -1,8 +1,0 @@
-<form method='POST' enctype='multipart/form-data'>
-    {% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    <a href="{{ request.META.HTTP_REFERER }}">
-        <input type='button' value='cencel'>
-    </a>
-    <input type='submit' value='save'>
-</form>
