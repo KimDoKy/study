@@ -25,11 +25,11 @@ class ModelTestCase(TestCase):
 class ViewTestCase(TestCase):
     
     def setUp(self):
-        user = User(username = 'tester')
-        user.save()
+        self.user = User(username = 'tester')
+        self.user.save()
         self.client = APIClient()
-        self.client.force_authenticate(user=user)
-        self.post_data = {'title':'test title', 'author':user.id}
+        self.client.force_authenticate(user=self.user)
+        self.post_data = {'title':'test title', 'author':self.user.id}
         self.response = self.client.post(
                 reverse('create'),
                 self.post_data,
@@ -37,3 +37,26 @@ class ViewTestCase(TestCase):
 
     def test_api_can_create_a_post(self):
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_a_post(self):
+        post = Post.objects.get()
+        response = self.client.get(
+                reverse('details', kwargs={'pk':post.id}),
+                format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, post)
+
+    def test_api_can_update_a_post(self):
+        post = Post.objects.get()
+        change_data = {'title':'change title', 'author':self.user.id}
+        res = self.client.put(
+                reverse('details', kwargs={'pk':post.id}),
+                change_data, format='json')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_a_post(self):
+        post = Post.objects.get()
+        response = self.client.delete(
+                reverse('details', kwargs={'pk':post.id}),
+                format='json', follow=True)
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
