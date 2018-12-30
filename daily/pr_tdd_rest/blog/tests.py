@@ -32,14 +32,14 @@ class ViewTestCase(TestCase):
                 reverse('create'),
                 self.post_data,
                 format='json')
-
+        
     def test_api_can_create_a_post(self):
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
 
     def test_authorization_is_enforced(self):
         new_client = APIClient()
-        res = new_client.get('/posts/', kwargs={'pk':123098}, format="json")
-        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+        res = new_client.get('/posts/', kwargs={'pk':81}, format="json")
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_a_post(self):
         post = Post.objects.get()
