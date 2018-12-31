@@ -25,11 +25,11 @@ class ModelTestCase(TestCase):
 class ViewTestCase(TestCase):
     
     def setUp(self):
-        self.user = User(username = 'tester')
-        self.user.save()
+        user = User(username = 'tester1')
+        user.save()
         self.client = APIClient()
-        self.client.force_authenticate(user=self.user)
-        self.post_data = {'title':'test title', 'author':self.user.id}
+        self.client.force_authenticate(user=user)
+        self.post_data = {'title':'test title', 'author':user.id}
         self.response = self.client.post(
                 reverse('create'),
                 self.post_data,
@@ -48,7 +48,7 @@ class ViewTestCase(TestCase):
 
     def test_api_can_update_a_post(self):
         post = Post.objects.get()
-        change_data = {'title':'change title', 'author':self.user.id}
+        change_data = {'title':'change title'}
         res = self.client.put(
                 reverse('details', kwargs={'pk':post.id}),
                 change_data, format='json')

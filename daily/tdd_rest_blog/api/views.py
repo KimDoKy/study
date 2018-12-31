@@ -11,7 +11,7 @@ class CreateView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
 
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(author=self.request.user)
 
 class DetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
