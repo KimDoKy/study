@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.detail import DetailView
 
 from .models import Post
 
@@ -8,3 +9,6 @@ def post_list(request):
     if q:
         posts = posts.filter(title__icontains=q)
     return render(request, 'blog/post_list.html', {'posts':posts})
+
+class DetailView(DetailView):
+    model = Post

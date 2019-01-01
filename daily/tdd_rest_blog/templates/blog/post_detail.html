@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Post Detail{% endblock %}
+
+{% block content %}
+<h2>{{ post.title }}</h2>
+<hr>
+<p>author : {{ post.author }} | created : {{ post.create_date }}</p>
+<hr>
+{{ post.content }}
+{% if post.photo %}
+<img src="{{ post.photo.url }}" width="200px">
+{% endif %}
+
+<hr>
+<a href="{% url 'post_list' %}"><button>Post List</button></a>
+
+{% endblock %}
