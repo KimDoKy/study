@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Post
 
@@ -17,3 +17,7 @@ class PostDetailView(DetailView):
 class PostCreateView(CreateView):
     model = Post
     fields = ['title','author', 'content', 'photo']
+
+class PostUpdateView(UpdateView):
+    model = Post
+    fields = ['title', 'author', 'content', 'photo']

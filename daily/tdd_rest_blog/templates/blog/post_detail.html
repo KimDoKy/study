@@ -13,6 +13,8 @@
 {% endif %}
 
 <hr>
-<a href="{% url 'post_list' %}"><button>Post List</button></a>
-
+<div id='option'>
+  <a href="{% url 'post_list' %}"><button>Post List</button></a>
+  <a href="{% url 'post_update' post.id %}"><button>Modify</button></a>
+</div>
 {% endblock %}
