@@ -18,4 +18,12 @@
     <td>{{ post.create_date }}</td>
   </tr>
   {% endfor %}
+</table>
+
+<div id='search'>
+  <form method='get'>
+    <input type='text' name='q'>
+    <input type='submit' value='search'>
+  </form>
+</div>
 {% endblock %}
