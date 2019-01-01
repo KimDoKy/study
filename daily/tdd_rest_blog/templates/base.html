@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Main Title{% endblock %}</title>
+  <link href="{% static 'css/blog.css' %}" rel='stylesheet'>
+</head>
+<body>
+
+<div id='header'>
+  Login / Logout
+</div>
+
+<div id='sidebar'>
+  <li><a href='#'>Home</a></li>
+  <li><a href='#'>List</a></li>
+</div>
+
+<div id='content'>
+  {% block content %}
+  {% endblock %}
+</div>
+
+<div id='footer'>
+  <p>Practice Tdd, RestAPI, Blog</p>
+</div>
+</body>
+</html>
