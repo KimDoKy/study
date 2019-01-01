@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Write Post{% endblock %}
+
+{% block content %}
+<div id='create'>
+  <form method='post' enctype='multipart/form-data'>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type='submit' value='save'>
+  </form>
+</div>
+
+<hr>
+<div id='option'>
+  <a href="{% url 'post_list' %}"><button>return list</button></a>
+</div>
+{% endblock %}
