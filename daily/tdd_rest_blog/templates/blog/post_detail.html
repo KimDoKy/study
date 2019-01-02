@@ -14,7 +14,8 @@
 
 <hr>
 <div id='option'>
-  <a href="{% url 'post_list' %}"><button>Post List</button></a>
-  <a href="{% url 'post_update' post.id %}"><button>Modify</button></a>
+  <a href="{% url 'blog:post_list' %}"><button>Post List</button></a>
+  <a href="{% url 'blog:post_update' post.id %}"><button>Modify</button></a>
+  <a href="{% url 'blog:post_del' post.id %}"><button>Delete</button></a>
 </div>
 {% endblock %}

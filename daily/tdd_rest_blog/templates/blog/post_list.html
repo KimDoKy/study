@@ -13,7 +13,7 @@
   {% for post in posts %}
   <tr>
     <td>{{ post.id }}</td>
-    <td><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></td>
+    <td><a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a></td>
     <td>{{ post.author }}</td>
     <td>{{ post.create_date }}</td>
   </tr>
@@ -28,6 +28,6 @@
 </div>
 
 <div id='option'>
-  <a href="{% url 'post_edit' %}"><button>Write</button></a>
+  <a href="{% url 'blog:post_edit' %}"><button>Write</button></a>
 </div>
 {% endblock %}
