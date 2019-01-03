@@ -21,7 +21,7 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li><a href="#">삭제</a></li>
+            <li><a href="#" @click="deleteTodo(index)">삭제</a></li>
           </ul>
         </div>
       </li>
@@ -45,6 +45,11 @@ export default {
           name: '안녕'
         }
       ]
+    }
+  },
+  methods: {
+    deleteTodo (i) {
+      this.todos.splice(i,1)
     }
   }
 }
