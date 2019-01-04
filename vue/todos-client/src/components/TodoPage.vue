@@ -27,7 +27,7 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li><a href="#" @click="deleteTodo(index)">삭제</a></li>
+            <li><a href="#" @click="deleteTodo(todo)">삭제</a></li>
           </ul>
         </div>
       </li>
@@ -40,29 +40,44 @@ export default {
   name: 'TodoPage',
   data () {
     return {
-      todos: [
-        {
-          name: '청소'
-        },
-        {
-          name: '밥먹기'
-        },
-        {
-          name: '안녕'
-        }
-      ]
+      name: null,
+      todos: [],
     }
   },
   methods: {
-    deleteTodo (i) {
-      this.todos.splice(i,1)
+    deleteTodo (todo) {
+      var vm = this
+      this.todos.forEach(function(_todo,i,obj){
+        if(_todo.id === todo.id) {
+          vm.$http.delete('http://todos.garam.xyz/api/todos/' + todo.id)
+          .then((result) => {
+            obj.splice(i,1)
+          })
+        }
+      })
     },
     createTodo (name) {
       if (name != null) {
-        this.todos.push({name:name})
+        var vm = this
+        this.$http.defaults.headers.post['Content-Type'] = 'application/json'
+        this.$http.post('http://todos.garam.xyz/api/todos', {
+          name: name
+        }).then((result) => {
+          vm.todos.push(result.data)
+        })
         this.name = null
       }
+    },
+    getTodos() {
+      var vm = this
+      this.$http.get('http://todos.garam.xyz/api/todos')
+      .then((result) => {
+        vm.todos = result.data.data
+      })
     }
+  },
+  mounted () {
+    this.getTodos()
   }
 }
 </script>
