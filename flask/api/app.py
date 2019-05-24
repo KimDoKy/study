@@ -242,4 +242,14 @@ def create_app(test_config = None):
                 'timeline':get_timeline(user_id)
             })
 
+    @app.route('/timeline', methods=['GET'])
+    @login_required
+    def user_timeline():
+        user_id = g.user_id
+
+        return jsonify({
+            'user_id': user_id,
+            'timeline': get_timeline(user_id)
+            })
+
     return app
