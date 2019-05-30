@@ -1,10 +1,8 @@
 # 1부터 n까지의 합
-
 def sum(n):
     return n * (n+1) // 2
 
 # palindrome
-
 def is_palindrome(word):
     for i in range(len(word)):
         if word[i] == word[(i+1) * -1]:
@@ -18,7 +16,6 @@ def is_palindrome(word):
 # print(is_palindrome('토마토')) # true
 
 # binary_search
-
 def binary_search(element, some_list):
     s_idx = 0
     e_idx = len(some_list) - 1
@@ -37,7 +34,6 @@ def binary_search(element, some_list):
 # print(binary_search(4,[2,5,6,3,4,5,6])) # 4
 
 # 최대값의 위치
-
 def find_max_idx(a):
     n = len(a)
     max_idx = 0
@@ -49,7 +45,6 @@ def find_max_idx(a):
 # print(find_max_idx([3,5,2,4,1,7,3]))  # 5 
 
 # 최소값의 위치
-
 def find_min_idx(a):
     n = len(a)
     min_idx = 0
@@ -61,7 +56,6 @@ def find_min_idx(a):
 # print(find_min_idx([4,6,7,3,4,5,2])) # 6
 
 # 동명이인 찾기
-
 def find_same_name(a):
     n = len(a)
     result = set()
@@ -72,3 +66,20 @@ def find_same_name(a):
     return result
 
 # print(find_same_name(['tom', 'sam', 'michael', 'sam', 'billy', 'billy'])) # sam, billy 
+
+# 팩토리얼
+def fact(n):
+    f = 1
+    for i in range(1, n+1):
+        f = f * i
+    return f
+
+# print(fact(5)) # 120
+
+# 팩토리얼(재귀)
+def fact2(n):
+    if n <= 1:
+        return 1
+    return n * fact2(n-1)
+
+# print(fact2(5)) # 120
