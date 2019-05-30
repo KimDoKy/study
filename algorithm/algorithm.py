@@ -83,3 +83,20 @@ def fact2(n):
     return n * fact2(n-1)
 
 # print(fact2(5)) # 120
+
+# 하노이의 탑
+def hanoi(n, from_p, to_p, aux_p):
+    if n == 1:
+        print(from_p, "->", to_p)
+        return
+    
+    hanoi(n - 1, from_p, aux_p, to_p)
+    print(from_p, "->", to_p)
+    hanoi(n - 1, aux_p, to_p, from_p)
+
+# print("n = 1")
+# hanoi(1, 1 , 3, 2)
+# print("n = 2")
+# hanoi(2, 1, 3, 2)
+# print("n = 3")
+# hanoi(3, 1, 3, 2)
