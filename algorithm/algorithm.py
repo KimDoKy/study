@@ -59,3 +59,16 @@ def find_min_idx(a):
     return min_idx
 
 # print(find_min_idx([4,6,7,3,4,5,2])) # 6
+
+# 동명이인 찾기
+
+def find_same_name(a):
+    n = len(a)
+    result = set()
+    for i in range(0, n-1):
+        for j in range(i+1, n):
+            if a[i] == a[j]:
+                result.add(a[i])
+    return result
+
+# print(find_same_name(['tom', 'sam', 'michael', 'sam', 'billy', 'billy'])) # sam, billy 
