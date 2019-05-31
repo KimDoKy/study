@@ -157,3 +157,33 @@ def solve_maze(g, start, end):
 #     'p':['l']
 # }
 # print(solve_maze(maze, 'a', 'p'))
+
+# 최대 수익 알고리즘
+def max_profit(prices):
+    n = len(prices)
+    max_profit = 0
+    min_price = prices[0]
+
+    for i in range(1, n):
+        profit = prices[i] - min_price
+        if profit > max_profit:
+            max_profit = profit
+        if prices[i] < min_price:
+            min_profit = prices[i]
+
+    return max_profit
+
+import random
+import time
+
+def test(n):
+    a = []
+    for i in range(0, n):
+        a.append(random.randint(5000, 20000))
+    start = time.time()
+    mpf = max_profit(a)
+    end = time.time()
+    f_time = end - start
+    print(n, mpf, f_time)
+
+print(test(100))
