@@ -74,3 +74,47 @@ def merge_sort(a):
 # print(d)
 # merge_sort(d)
 # print(d)
+
+# 모든 친구 찾기(그래프)
+def print_all_friends(g, start):
+    qu = []
+    done = set()
+
+    qu.append(start)
+    done.add(start)
+
+    while qu:
+        p = qu.pop(0)
+        print(p)
+        for x in g[p]:
+            if x not in done:
+                qu.append(x)
+                done.add(x)
+
+# 친구 친밀도 계산
+def print_friend_point(g, start):
+    qu = []
+    done = set()
+
+    qu.append((start, 0))
+    done.add(start)
+
+    while qu:
+        (p, d) = qu.pop(0)
+        print(p, d)
+        for x in g[p]:
+            if x not in done:
+                qu.append((x, d+1))
+                done.add(x)
+
+# fr_info = {
+#     'Summer': ['John', 'Justin', 'Mike'],
+#     'John': ['Summer', 'Justin'],
+#     'Justin': ['Summer', 'John', 'Mike', 'May'],
+#     'Mike': ['Summer', 'Justin'],
+#     'May': ['Justin', 'Kim'],
+#     'Kim': ['May']
+# }
+
+# print_all_friends(fr_info, 'Summer')
+# print_friend_point(fr_info, 'Kim')
