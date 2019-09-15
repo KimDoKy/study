@@ -2,7 +2,7 @@
 
 ```
 # docker build -t <container_name> .
-$ docker build -t container-base .
+$ docker build -t container .
 
 # docker build -t <container_name> . -f Dockerfile_base
 $ docker build -t container-base . -f Dockerfile_base
@@ -20,4 +20,7 @@ $ docker rm $(docker ps -a -q)
 
 # delete none images(build failed images)
 $ docker rmi -f $(docker images --filter "dangling=true" -q)
+
+# test uwsgi in container
+$ uwsgi --http :8080 --chdir /srv/app/docker_app -w conf.wsgi
 ```
