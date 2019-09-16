@@ -23,4 +23,8 @@ $ docker rmi -f $(docker images --filter "dangling=true" -q)
 
 # test uwsgi in container
 $ uwsgi --http :8080 --chdir /srv/app/docker_app -w conf.wsgi
+
+# nginx, uwsgi 추가후 확인
+(in container)$ nginx
+(in container)$ uwsgi --ini /etc/uwsgi/sites/app.ini
 ```
