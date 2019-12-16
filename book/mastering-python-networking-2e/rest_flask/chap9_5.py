@@ -1,4 +1,4 @@
-from flask import Flask, url_for
+from flask import Flask, url_for, jsonify
 app = Flask(__name__)
 
 @app.route('/')
@@ -15,7 +15,7 @@ def router(hostname):
 
 @app.route('/routers/<hostname>/interface/<int:interface_number>')
 def interface(hostname, interface_number):
-    return 'You are at %s interface %d' % (hostname, interface_number)
+    return jsonify(name=hostname, interface=interface_number)
 
 @app.route('/<hostname>/list_interfaces')
 def device(hostname):
