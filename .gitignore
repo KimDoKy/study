@@ -1,11 +1,12 @@
 .idea/
 .python-version
 .DS_Store
-.swp
-.pyc
+*.swp
+*.pyc
 __pycache__/
 .conf-secret/
 .ipynb_checkpoints/
 *.jpg
 *.gif
 *.png
+db.sqlit3
