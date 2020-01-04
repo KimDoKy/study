@@ -9,4 +9,4 @@ __pycache__/
 *.jpg
 *.gif
 *.png
-db.sqlit3
+db.sqlite3
