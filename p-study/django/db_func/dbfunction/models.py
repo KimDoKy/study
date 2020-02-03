@@ -9,3 +9,7 @@ class Experiment(models.Model):
     end_date = models.DateField(null=True, blank=True)
     end_time = models.TimeField(null=True, blank=True)
 
+# math
+class Vector(models.Model):
+    x = models.FloatField()
+    y = models.FloatField()
