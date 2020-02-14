@@ -19,11 +19,11 @@ class NewVisitorTest(unittest.TestCase):
         # 웹페이지 타이틀과 헤더가 'To-Do'를 표시하고 있다.
         self.assertIn('To-Do', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
-        self.asserIn('To-Do', header_text)
+        self.assertIn('To-Do', header_text)
 
         # 그녀는 바로 작업을 추가하기로 한다
         inputbox = self.browser.find_element_by_id('id_new_item')
-        self.asserEqual(
+        self.assertEqual(
                 inputbox.get_attribute('placeholder'),
                 'Enter a to-do item'
                 )
@@ -33,12 +33,13 @@ class NewVisitorTest(unittest.TestCase):
 
         # 엔터키를 치면 페이지가 갱신되고 작업 목록에
         # "1: Buy peacock feathers" 아이템이 추가된다
-        inputbox.send_keys(Keys.Enter)
+        inputbox.send_keys(Keys.ENTER)
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-                any(row.text == '1: Buy peacock feathers' for row in rows)
+                any(row.text == '1: Buy peacock feathers' for row in rows),
+                "New to-do item did not appear in table"
                 )
 
         # 추가 아이템을 입력할 수 있는 여분의 텍스트 상자가 존재한다
