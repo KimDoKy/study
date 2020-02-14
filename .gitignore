@@ -1,7 +1,7 @@
 .idea/
 .python-version
 .DS_Store
-.swp
+*.swp
 .pyc
 __pycache__/
 .conf-secret/
