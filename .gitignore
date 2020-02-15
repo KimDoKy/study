@@ -10,3 +10,4 @@ __pycache__/
 *.gif
 *.png
 db.sqlite3
+static/
