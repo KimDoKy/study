@@ -9,5 +9,3 @@ __pycache__/
 *.jpg
 *.gif
 *.png
-db.sqlite3
-static/
