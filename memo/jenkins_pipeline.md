@@ -204,27 +204,89 @@ node('master') {
 - 완료한 후 젠킨스 환경 설정 페이지 하단의 Save
 - 해당하는 개인 접속 토큰이 젠킨스 인증에도 추가됨. 이를 확인하려면 Jenkins dashboard -> Credentials -> System -> api.github.com 으로 이동 후 Kind 영역의 secret text에서 확인 가능
 
-> 이 부분이 잘안되는데...구글링해보니 그냥 깃헙에서 토큰을 발행하고, 젠킨스에 입력하는 방식으로 해야 하는 듯.
+> 이 부분이 잘안되는데...구글링해보니 그냥 깃헙에서 토큰을 발행하고, 젠킨스에 입력하는 방식으로 해결함.
 
-
-- 젠킨스 대시보드에서 Manage Jenkins -> Configure System
-- GitHub -> Credentials 영역에 새롭게 생성된 Kind 영역의 secret text(젠킨스의 개인 접ㅈ속 토큰)을 선택
 - Test Connection으로 연동 체크
 - 완료후 Save
 
-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
-
 ### 새로운 깃허브 저장소 만들기
+
+> 일단 메이븐으로 실습을 진행하기 때문에 저자의 git을 포크해서 사용
+> simple-maven-project-with-tests
 
 ### Jenkinsfile 이용하기
 
+- 포크한 저장소로 이동
+- 저장소 페이지에서 Jenkinsfile이 될 새로운 빈 파일을 만들기 위해 Create new file 을 클릭
+- 파일명은 Jenkinsfile
+- 내용은 아래 코드를 입력 후 커밋(master 브랜치에 바로 커밋)
+
+```
+node ('master') {
+  checkout scm
+  stage('Build') {
+    withMaven(maven: 'M3') {
+      
+      if (isUnix()) {
+        sh 'mvn -Dmaven.test.failure.ignore clean package'
+      }
+      else {
+        bat 'mvn -Dmaven.test.failure.ignore clean package'
+      }
+    }
+  }
+  stage('Results') {
+    junit '**/target/surefire-reports/TEST-*.xml'
+    archive 'target/*.jar'
+  }
+}
+```
+
 ### 젠킨스에서 멀티브랜치 파이프라인 생성하기
 
+-  New Item 생성
+- Multibranch Pipeline - Enter an item name 에 이름을 작성 후 OK
+- Branch Sources 섹션으로 이동
+- Add Source 를 클릭후  GitHub 선택
+ - Credentials에 Github account credentials 선택(Kind는 Username with Password) 
+ - Owner 영역은 깃헙 사용자명
+ - 완료하면 Repository 영역에 사용자의 깃헙 계정에 있는 모든 저장소가 나타날 것임
+ - 포크한 저장소 선택
+ - 나머지는 기본값
+ - Save
+ 
+> Credentials를 None 으로하고 repo scan하면 정상적으로 레포를 불러옴. 오픈소스인 경우 그냥 불러오는 듯?
+ 
 ### Webhooks 재등록
+
+- Manage Jenkins -> Configure System -> GitHub
+- Advanced.. 클릭(두번째꺼)
+ - Re-register hooks for all jobs
+ 
+이것으로 사용자의 깃헙 계정에 있는 연관 저장소에 멀티브랜치 파이프라인을 위한 Webhooks가 설정됨. 깃헙에서 Webhooks를 확인
+
+ - 깃헙 로그인
+ - 포크한 저장소로 이동
+ - 저장소의 settings 클릭
+ - webhooks 이동
+ - 젠킨스 서버를 위한 webhooks 확인
+ 
+ > 음... 실패.. 이 부분부터 삽질 필요... 애고...
 
 ### 젠킨스 멀티브랜치 파이프라인 인 액션
 
+- 젠킨스 대시보드에서 멀티브랜치 파이프라인을 클릭
+- Scan Repository Now 클릭
+- Jenkinsfile이 있는 브랜치들을 스캔한 후, Jenkinsfile을 가진 모든 브랜치의 파이프라인을 실행 됨
+
 ### 멀티브랜치 파이프라인 테스트를 위해 새로운 기능 브랜치 만들기
+
+마스터 브랜치에서 기능 브랜치를 새로 만들어 젠킨스가 파이프라인을 실행시키기
+
+- 깃헙 로그인
+- 포크한 저장소로 이동
+- 새 브랜치 생성 (옵션은 Create branch: feature - feature로 명명)
+- 새 기능 브랜치에 대한 젠킨스 파이프라인을 즉시 실행될 것임
 
 ## 젠킨스 블루오션
 
